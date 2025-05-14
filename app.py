@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, session, flash
+from flask import Flask, render_template, request, redirect, session, flash, url_for
+from flask_login import LoginManager, login_user
 from database import db
 from config import Config
 from models import db
@@ -6,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
 from dotenv import load_dotenv
+from flask_login import UserMixin
 # from routes import bp  # Quando for usar Blueprints
 
 load_dotenv()
@@ -15,6 +17,7 @@ load_dotenv()
 
 
 app = Flask(__name__, static_folder='static/Assents')
+lm = LoginManager(app)
 app.secret_key = 'dotapet'
 
 user = os.getenv("DB_USER")
@@ -25,6 +28,11 @@ dbname = os.getenv("DB_NAME")
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector://{user}:{password}@{host}/{dbname}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+@lm.user_loader
+def user_loader(id):
+    usuario = db.session.query(Usuario).filter_by(id=id).first()
+    return usuario
+
 
 
 
@@ -46,23 +54,25 @@ class Pet(db.Model):
 
 
 
-class Cadastro(db.Model):
+class Cadastro(UserMixin, db.Model):
     __tablename__ = 'cadastros'
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(50), nullable=False)
     sobrenome = db.Column(db.String(50), nullable=False)
     data_nascimento = db.Column(db.Date, nullable=False)
-    email = db.Column(db.String(100), nullable=False, unique=True)
     telefone = db.Column(db.String(20), nullable=False)
     pet_preferido = db.Column(db.String(50), nullable=True)
+    email = db.Column(db.String(100), nullable=False, unique=True)
+    senha = db.Column(db.String(255), nullable=False)
 
-    def __init__(self, nome, sobrenome, data_nascimento, email, telefone, pet_preferido):
+    def __init__(self, nome, sobrenome, data_nascimento, telefone, pet_preferido, email, senha):
         self.nome = nome
         self.sobrenome = sobrenome
         self.data_nascimento = data_nascimento
-        self.email = email
         self.telefone = telefone
         self.pet_preferido = pet_preferido
+        self.email = email
+        self.senha = senha
 
 
 
@@ -78,13 +88,14 @@ class Adocao(db.Model):
     pet = db.relationship('Pet', backref='adocoes', lazy=True)
 
 
-class Usuario(db.Model):
+class Usuario(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nome = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     senha = db.Column(db.String(255), nullable=False)
     telefone = db.Column(db.String(20), nullable=False)
     data_cadastro = db.Column(db.DateTime, nullable=False)
+    
 
     def __init__(self, nome, email, senha, telefone, data_cadastro):
         self.nome = nome
@@ -182,18 +193,45 @@ def autenticar():
 
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastrar():
+    if request.method == 'GET':
+        return render_template('cadastro.html')
+    elif request.method == 'POST':
+        nome = request.form['nome']
+        sobrenome = request.form['sobrenome']
+        nascimento = request.form['nascimento']
+        telefone = request.form['telefone']
+        pet_preferido = request.form['pet']
+        email = request.form['email']
+        senha = request.form['senha']
+
+        novo_usuario = Usuario(nome=nome, sobrenome=sobrenome, nascimento=nascimento, telefone=telefone, pet_preferido=pet_preferido, email=email, senha=senha)
+        db.session.add(novo_usuario)
+        db.session.commit()
+
+        login_user(novo_usuario)
+
+
+
+        return redirect(url_for('login'))
+# cadastro = Cadastro(nome, sobrenome, nascimento, telefone, pet_preferido, email, senha)
+    #return render_template('cadastro.html')
+
+
+'''@app.route('/cadastro', methods=['GET', 'POST'])
+def cadastrar():
     if request.method == 'POST':
         nome = request.form['nome']
         sobrenome = request.form['sobrenome']
         nascimento = request.form['nascimento']
-        email = request.form['email']
         telefone = request.form['telefone']
         pet_preferido = request.form['pet']
+        email = request.form['email']
+        senha = request.form['senha']
 
-        cadastro = Cadastro(nome, sobrenome, nascimento, email, telefone, pet_preferido)
+        cadastro = Cadastro(nome, sobrenome, nascimento, telefone, pet_preferido, email, senha)
         return redirect('/login')
 
-    return render_template('cadastro.html')
+    return render_template('cadastro.html')'''
 
 
 
