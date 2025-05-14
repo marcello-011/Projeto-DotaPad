@@ -14,7 +14,7 @@ load_dotenv()
 
 
 
-app = Flask(__name__, static_folder='assents')
+app = Flask(__name__, static_folder='static/Assents')
 app.secret_key = 'dotapet'
 
 user = os.getenv("DB_USER")
