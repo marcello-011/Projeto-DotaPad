@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{Dotapet}} - Cadastro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #27548A;
+        }
+        .bg-primary {
+            background-color: #27548A;
+        }
+        .bg-secondary {
+            background-color: #DDA853;
+        }
+        .text-primary {
+            color: #27548A;
+        }
+        .text-secondary {
+            color: #DDA853;
+        }
+        .btn-secondary {
+            background-color: #DDA853;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #c69545;
+        }
+        .form-input {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 12px;
+            width: 100%;
+            background-color: white;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #DDA853;
+            box-shadow: 0 0 0 2px rgba(221, 168, 83, 0.2);
+        }
+        .form-select {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 12px;
+            width: 100%;
+            appearance: none;
+            background-color: white;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23757575' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
+        .form-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header --> 
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo aumentado -->
+            <div class="flex items-center">
+                <a href="pagina-principal.html">
+                    <img src="Assets/logo-navbar.png.png" alt="Dotapet Logo" class="h-16">
+                </a>
+            </div>
+
+            <!-- Menu de navegação -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="pagina-de-busca.html" class="text-primary font-medium hover:text-secondary">Busca</a>
+                <a href="pagina-de-adocao.html" class="text-primary font-medium hover:text-secondary">Adoção</a>
+                <a href="pagina-conheca.html" class="text-primary font-medium hover:text-secondary">Conheça</a>
+                <a href="pagina-de-ajuda.html" class="text-primary font-medium hover:text-secondary">Ajude</a>
+            </nav>
+
+                <!-- Botões como links estilizados -->
+                <div class="hidden md:flex items-center gap-3">
+                <a href="pagina-anunciar.html" class="btn-secondary px-7 py-2 rounded-full font-semibold text-center">
+                    Anunciar
+                </a>
+                <a href="pagina-de-login.html" class="btn-secondary px-6 py-2 rounded-full font-semibold text-center">
+                    Entrar
+                </a>
+                </div>
+
+            <!-- Botão de menu mobile -->
+            <button class="md:hidden text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow py-8 md:py-12">
+        <div class="container mx-auto px-4">
+            <div class="max-w-md mx-auto form-container p-8">
+                <h1 class="text-3xl font-bold text-primary text-center mb-8">Cadastro</h1>
+                
+                <form action="{{ url_for('cadastrar') }}" method="POST">
+                    <div>
+                        <label for="firstName" class="block text-gray-700 font-medium mb-2">Nome</label>
+                        <input type="text" id="firstName" class="form-input" placeholder="Digite seu nome" required>
+                    </div>
+                    
+                    <div>
+                        <label for="lastName" class="block text-gray-700 font-medium mb-2">Sobrenome</label>
+                        <input type="text" id="lastName" class="form-input" placeholder="Digite seu sobrenome" required>
+                    </div>
+                    
+                    <div>
+                        <label for="birthDate" class="block text-gray-700 font-medium mb-2">Data de Nascimento</label>
+                        <input type="date" id="birthDate" class="form-input" required>
+                    </div>
+                    
+                    <div>
+                        <label for="email" class="block text-gray-700 font-medium mb-2">E-mail</label>
+                        <input type="email" id="email" class="form-input" placeholder="Digite seu e-mail" required>
+                    </div>
+                    
+                    <div>
+                        <label for="phone" class="block text-gray-700 font-medium mb-2">Telefone</label>
+                        <input type="tel" id="phone" class="form-input" placeholder="Digite seu telefone" required>
+                    </div>
+                    
+                    <div>
+                        <label for="petPreference" class="block text-gray-700 font-medium mb-2">Pet Preferido</label>
+                        <select id="petPreference" class="form-select" required>
+                            <option value="" disabled selected>Selecione sua preferência</option>
+                            <option value="dog">Cachorro</option>
+                            <option value="cat">Gato</option>
+                            <option value="both">Ambos</option>
+                        </select>
+                    </div>
+                    
+                    <div class="pt-4">
+                        <button type="submit" class="btn-secondary w-full py-3 rounded-lg font-bold text-lg hover:shadow-md transition-all">
+                            Cadastrar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="mb-6 md:mb-0">
+                    <img src="Assets/logo-navbar.png.png" alt="Dotapet Logo" class="h-20">
+                </div>
+                
+                <div class="flex space-x-6 mb-6 md:mb-0">
+                    <img src="Assets/comprasegura.png.png" alt="Compra Segura" class="h-10">
+                    <img src="Assets/unifecaf.png.png" alt="Unifecaf" class="h-10">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-semibold text-primary mb-3">Links Rápidos</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Início</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Sobre</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Adotar</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-primary mb-3">Ajuda</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">FAQ</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Contato</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Termos</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 pt-8 text-center">
+                <p class="text-gray-600">
+                    © 2025 Dotapet. Todos os direitos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Phone number mask
+            const phoneInput = document.getElementById('phone');
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+                    value = value.replace(/(\d)(\d{4})$/, '$1-$2');
+                    e.target.value = value;
+                });
+            }
+        });
+    </script>
+</body>
+</html>

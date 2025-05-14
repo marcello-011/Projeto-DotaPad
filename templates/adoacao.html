@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dotapet - Buscar Pets</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .bg-primary {
+            background-color: #27548A;
+        }
+        .bg-secondary {
+            background-color: #DDA853;
+        }
+        .bg-light {
+            background-color: #F5EEDC;
+        }
+        .text-primary {
+            color: #27548A;
+        }
+        .text-secondary {
+            color: #DDA853;
+        }
+        .btn-primary {
+            background-color: #27548A;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #1d436e;
+        }
+        .btn-secondary {
+            background-color: #DDA853;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #c69545;
+        }
+        .pet-card {
+            transition: all 0.3s ease;
+        }
+        .pet-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .filter-checkbox:checked {
+            background-color: #DDA853;
+            border-color: #DDA853;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    
+    <!-- Header --> 
+    <header class="bg-white shadow-md sticky top-0 z-50">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <!-- Logo aumentado -->
+                <div class="flex items-center">
+                    <a href="pagina-principal.html">
+                        <img src="Assets/logo-navbar.png.png" alt="Dotapet Logo" class="h-16">
+                    </a>
+                </div>
+
+                <!-- Menu de navegação -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="pagina-de-busca.html" class="text-primary font-medium hover:text-secondary">Busca</a>
+                    <a href="pagina-de-adocao.html" class="text-primary font-medium hover:text-secondary">Adoção</a>
+                    <a href="pagina-conheca.html" class="text-primary font-medium hover:text-secondary">Conheça</a>
+                    <a href="pagina-de-ajuda.html" class="text-primary font-medium hover:text-secondary">Ajude</a>
+                </nav>
+
+                    <!-- Botões como links estilizados -->
+                    <div class="hidden md:flex items-center gap-3">
+                    <a href="pagina-anunciar.html" class="btn-secondary px-7 py-2 rounded-full font-semibold text-center">
+                        Anunciar
+                    </a>
+                    <a href="pagina-de-login.html" class="btn-secondary px-6 py-2 rounded-full font-semibold text-center">
+                        Entrar
+                    </a>
+                    </div>
+
+                <!-- Botão de menu mobile -->
+                <button class="md:hidden text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+    </header>
+img
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Page Title -->
+        <div class="mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-primary">Encontre seu novo melhor amigo</h1>
+            <p class="text-gray-600 mt-2">Navegue pelos pets disponíveis para adoção e encontre aquele que combina com você!</p>
+        </div>
+
+        <!-- Search and Filters Section -->
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Filters Sidebar -->
+            <div class="w-full lg:w-1/4 bg-white p-6 rounded-xl shadow-sm">
+                <h2 class="text-xl font-bold text-primary mb-6">Filtrar Pets</h2>
+                
+                <!-- Species Filter -->
+                <div class="mb-6">
+                    <h3 class="font-semibold text-primary mb-3">Espécie</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="filter-checkbox h-5 w-5 rounded border-gray-300 text-secondary focus:ring-secondary">
+                            <span class="text-gray-700">Cachorro</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="filter-checkbox h-5 w-5 rounded border-gray-300 text-secondary focus:ring-secondary">
+                            <span class="text-gray-700">Gato</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Gender Filter -->
+                <div class="mb-6">
+                    <h3 class="font-semibold text-primary mb-3">Sexo</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="filter-checkbox h-5 w-5 rounded border-gray-300 text-secondary focus:ring-secondary">
+                            <span class="text-gray-700">Fêmea</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="filter-checkbox h-5 w-5 rounded border-gray-300 text-secondary focus:ring-secondary">
+                            <span class="text-gray-700">Macho</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Size Filter -->
+                <div class="mb-6">
+                    <h3 class="font-semibold text-primary mb-3">Tamanho</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="filter-checkbox h-5 w-5 rounded border-gray-300 text-secondary focus:ring-secondary">
+                            <span class="text-gray-700">Mini</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="filter-checkbox h-5 w-5 rounded border-gray-300 text-secondary focus:ring-secondary">
+                            <span class="text-gray-700">Pequeno</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="filter-checkbox h-5 w-5 rounded border-gray-300 text-secondary focus:ring-secondary">
+                            <span class="text-gray-700">Médio</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="filter-checkbox h-5 w-5 rounded border-gray-300 text-secondary focus:ring-secondary">
+                            <span class="text-gray-700">Grande</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Age Filter -->
+                <div class="mb-6">
+                    <h3 class="font-semibold text-primary mb-3">Idade</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="filter-checkbox h-5 w-5 rounded border-gray-300 text-secondary focus:ring-secondary">
+                            <span class="text-gray-700">Filhote</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="filter-checkbox h-5 w-5 rounded border-gray-300 text-secondary focus:ring-secondary">
+                            <span class="text-gray-700">Adulto</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="filter-checkbox h-5 w-5 rounded border-gray-300 text-secondary focus:ring-secondary">
+                            <span class="text-gray-700">Sênior</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <button class="btn-secondary w-full py-3 px-4 rounded-lg font-medium shadow-sm hover:shadow-md transition-all">
+                    Aplicar Filtros
+                </button>
+            </div>
+            
+            <!-- Pets Results -->
+            <div class="w-full lg:w-3/4">
+                <!-- Search Bar -->
+                <div class="bg-white p-4 rounded-xl shadow-sm mb-6">
+                    <div class="relative">
+                        <input type="text" placeholder="Buscar por nome, raça ou características..." 
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent pl-12">
+                        <div class="absolute left-3 top-3 text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Results Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Pet Card 1 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
+                        <img src="Assets/Images/rex.png" alt="Cachorro para adoção" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-bold text-primary">Rex</h3>
+                            <div class="flex items-center text-gray-600 text-sm mt-1">
+                                <span class="mr-3">Macho</span>
+                                <span>Adulto</span>
+                            </div>
+                            <p class="text-gray-600 mt-2 text-sm">Labrador - Grande - 4 anos</p>
+                            <button class="btn-secondary w-full mt-4 py-2 px-4 rounded-lg font-medium">
+                                Ver detalhes
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Pet Card 2 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
+                        <img src="Assets/Images/lunna.png" alt="Cachorro para adoção" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-bold text-primary">Luna</h3>
+                            <div class="flex items-center text-gray-600 text-sm mt-1">
+                                <span class="mr-3">Fêmea</span>
+                                <span>Filhote</span>
+                            </div>
+                            <p class="text-gray-600 mt-2 text-sm">SRD - Pequeno - 3 meses</p>
+                            <button class="btn-secondary w-full mt-4 py-2 px-4 rounded-lg font-medium">
+                                Ver detalhes
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Pet Card 3 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
+                        <img src="Assets/Images/goldenretriever.png" alt="Cachorro para adoção" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-bold text-primary">Thor</h3>
+                            <div class="flex items-center text-gray-600 text-sm mt-1">
+                                <span class="mr-3">Macho</span>
+                                <span>Adulto</span>
+                            </div>
+                            <p class="text-gray-600 mt-2 text-sm">Golden Retriever - Grande - 5 anos</p>
+                            <button class="btn-secondary w-full mt-4 py-2 px-4 rounded-lg font-medium">
+                                Ver detalhes
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Pet Card 4 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
+                        <img src="Assets/Images/poodle.png" alt="Cachorro para adoção" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-bold text-primary">Mel</h3>
+                            <div class="flex items-center text-gray-600 text-sm mt-1">
+                                <span class="mr-3">Fêmea</span>
+                                <span>Sênior</span>
+                            </div>
+                            <p class="text-gray-600 mt-2 text-sm">Poodle - Pequeno - 10 anos</p>
+                            <button class="btn-secondary w-full mt-4 py-2 px-4 rounded-lg font-medium">
+                                Ver detalhes
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Pet Card 5 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
+                        <img src="Assets/Images/beagle.png" alt="Cachorro para adoção" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-bold text-primary">Bolt</h3>
+                            <div class="flex items-center text-gray-600 text-sm mt-1">
+                                <span class="mr-3">Macho</span>
+                                <span>Adulto</span>
+                            </div>
+                            <p class="text-gray-600 mt-2 text-sm">Beagle - Médio - 2 anos</p>
+                            <button class="btn-secondary w-full mt-4 py-2 px-4 rounded-lg font-medium">
+                                Ver detalhes
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Pet Card 6 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
+                        <img src="Assets/Images/beagle-mini.png" alt="Cachorro para adoção" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-bold text-primary">Nina</h3>
+                            <div class="flex items-center text-gray-600 text-sm mt-1">
+                                <span class="mr-3">Fêmea</span>
+                                <span>Filhote</span>
+                            </div>
+                            <p class="text-gray-600 mt-2 text-sm">SRD - Mini - 2 meses</p>
+                            <button class="btn-secondary w-full mt-4 py-2 px-4 rounded-lg font-medium">
+                                Ver detalhes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="flex justify-center mt-8">
+                    <nav class="flex items-center space-x-2">
+                        <button class="px-3 py-1 rounded border border-gray-300 text-gray-600 hover:bg-secondary hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <button class="px-4 py-1 rounded border border-secondary bg-secondary text-white font-medium">1</button>
+                        <button class="px-4 py-1 rounded border border-gray-300 text-gray-600 hover:bg-secondary hover:text-white">2</button>
+                        <button class="px-4 py-1 rounded border border-gray-300 text-gray-600 hover:bg-secondary hover:text-white">3</button>
+                        <span class="px-2 text-gray-600">...</span>
+                        <button class="px-4 py-1 rounded border border-gray-300 text-gray-600 hover:bg-secondary hover:text-white">8</button>
+                        <button class="px-3 py-1 rounded border border-gray-300 text-gray-600 hover:bg-secondary hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="mb-6 md:mb-0">
+                    <img src="Assets/logo-navbar.png.png" alt="Dotapet Logo" class="h-20">
+                </div>
+                
+                <div class="flex space-x-6 mb-6 md:mb-0">
+                    <img src="Assets/comprasegura.png.png" alt="Compra Segura" class="h-10">
+                    <img src="Assets/unifecaf.png.png" alt="Unifecaf" class="h-10">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-semibold text-primary mb-3">Links Rápidos</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Início</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Sobre</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Adotar</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-primary mb-3">Ajuda</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">FAQ</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Contato</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Termos</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 pt-8 text-center">
+                <p class="text-gray-600">
+                    © 2025 Dotapet. Todos os direitos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

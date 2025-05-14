@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dotapet - Quem Somos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #27548A;
+        }
+        .bg-primary {
+            background-color: #27548A;
+        }
+        .bg-secondary {
+            background-color: #DDA853;
+        }
+        .bg-light {
+            background-color: #F5EEDC;
+        }
+        .text-primary {
+            color: #27548A;
+        }
+        .text-secondary {
+            color: #DDA853;
+        }
+        .text-light {
+            color: #F5EEDC;
+        }
+        .btn-primary {
+            background-color: #27548A;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #1d436e;
+        }
+        .btn-secondary {
+            background-color: #DDA853;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #c69545;
+        }
+        .content-container {
+            background-color: #FFFFFF;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+<!-- Header --> 
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo aumentado -->
+            <div class="flex items-center">
+                <a href="pagina-principal.html">
+                    <img src="Assets/logo-navbar.png.png" alt="Dotapet Logo" class="h-16">
+                </a>
+            </div>
+
+            <!-- Menu de navegação -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="pagina-de-busca.html" class="text-primary font-medium hover:text-secondary">Busca</a>
+                <a href="pagina-de-adocao.html" class="text-primary font-medium hover:text-secondary">Adoção</a>
+                <a href="pagina-conheca.html" class="text-primary font-medium hover:text-secondary">Conheça</a>
+                <a href="pagina-de-ajuda.html" class="text-primary font-medium hover:text-secondary">Ajude</a>
+            </nav>
+
+                <!-- Botões como links estilizados -->
+                <div class="hidden md:flex items-center gap-3">
+                <a href="pagina-anunciar.html" class="btn-secondary px-7 py-2 rounded-full font-semibold text-center">
+                    Anunciar
+                </a>
+                <a href="pagina-de-login.html" class="btn-secondary px-6 py-2 rounded-full font-semibold text-center">
+                    Entrar
+                </a>
+                </div>
+
+            <!-- Botão de menu mobile -->
+            <button class="md:hidden text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <div class="container mx-auto px-4 py-12">
+            <div class="content-container p-8 md:p-12 max-w-4xl mx-auto">
+                <!-- Title -->
+                <h1 class="text-4xl md:text-5xl font-bold text-secondary text-center mb-12">Quem somos</h1>
+                
+                <!-- Welcome Section -->
+                <section class="mb-10">
+                    <h2 class="text-2xl font-semibold text-primary mb-4">Bem-vindo à Dotapet!</h2>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        Fundada em 2025, a Dotapet nasceu com a missão de conectar pets e adotantes em todo o Brasil através de um sistema online inovador. Somos uma plataforma dedicada a facilitar o encontro entre animais que precisam de um lar e pessoas dispostas a oferecer amor e cuidado.
+                    </p>
+                    <p class="text-gray-700 leading-relaxed">
+                        Nosso sistema foi cuidadosamente desenvolvido para garantir segurança, transparência e eficiência em todo o processo de adoção, desde o primeiro contato até a finalização responsável.
+                    </p>
+                </section>
+                
+                <!-- Mission Section -->
+                <section class="mb-10">
+                    <h2 class="text-2xl font-semibold text-primary mb-4">Nossa Missão</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        Nosso compromisso é com o bem-estar animal e a promoção da adoção responsável. Acreditamos que cada pet merece uma família amorosa e trabalhamos diariamente para tornar essa conexão possível em todo o território nacional.
+                    </p>
+                </section>
+                
+                <!-- Vision Section -->
+                <section class="mb-10">
+                    <h2 class="text-2xl font-semibold text-primary mb-4">Nossa Visão</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        Almejamos ser referência nacional em adoção responsável, reconhecidos pela excelência no serviço prestado e pelo impacto positivo na vida de milhares de animais e famílias brasileiras.
+                    </p>
+                </section>
+                
+                <!-- Values Section -->
+                <section class="mb-10">
+                    <h2 class="text-2xl font-semibold text-primary mb-4">Nossos Valores</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-medium text-secondary mb-2">Amor</h3>
+                            <p class="text-gray-700">Trabalhamos com paixão pelo que acreditamos, colocando o bem-estar animal em primeiro lugar.</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-medium text-secondary mb-2">Cuidado</h3>
+                            <p class="text-gray-700">Garantimos que todos os processos sejam realizados com atenção e responsabilidade.</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-medium text-secondary mb-2">Responsabilidade</h3>
+                            <p class="text-gray-700">Comprometimento com todas as partes envolvidas no processo de adoção.</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-medium text-secondary mb-2">Inclusão</h3>
+                            <p class="text-gray-700">Acolhemos todos os animais sem distinção, valorizando cada vida.</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Partnerships Section -->
+                <section class="mb-10">
+                    <h2 class="text-2xl font-semibold text-primary mb-4">Parcerias</h2>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        Contamos com o apoio de diversas ONGs de proteção animal, empresas comprometidas com a causa e órgãos governamentais que compartilham da nossa visão de um mundo melhor para os animais.
+                    </p>
+                    <p class="text-gray-700 leading-relaxed">
+                        Essas parcerias nos permitem ampliar nosso alcance e impacto, garantindo que mais pets encontrem o lar que merecem.
+                    </p>
+                </section>
+                
+                <!-- Contact Button -->
+                <div class="text-center mt-12">
+                    <a href="https://wa.me/5511950210838">
+                    
+                    <button class="btn-secondary px-8 py-3 rounded-lg font-medium text-lg hover:shadow-md transition-all">
+                        Entre em contato
+                    </button>
+                    
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="mb-6 md:mb-0">
+                    <img src="Assets/logo-navbar.png.png" alt="Dotapet Logo" class="h-20">
+                </div>
+                
+                <div class="flex space-x-6 mb-6 md:mb-0">
+                    <img src="Assets/comprasegura.png.png" alt="Compra Segura" class="h-10">
+                    <img src="Assets/unifecaf.png.png" alt="Unifecaf" class="h-10">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-semibold text-primary mb-3">Links Rápidos</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Início</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Sobre</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Adotar</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-primary mb-3">Ajuda</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">FAQ</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Contato</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Termos</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 pt-8 text-center">
+                <p class="text-gray-600">
+                    © 2025 Dotapet. Todos os direitos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

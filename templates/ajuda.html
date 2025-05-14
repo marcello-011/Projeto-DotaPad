@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dotapet - Ajuda</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #27548A;
+        }
+        .bg-primary {
+            background-color: #27548A;
+        }
+        .bg-secondary {
+            background-color: #DDA853;
+        }
+        .bg-light {
+            background-color: #F5EEDC;
+        }
+        .text-primary {
+            color: #27548A;
+        }
+        .text-secondary {
+            color: #DDA853;
+        }
+        .text-light {
+            color: #F5EEDC;
+        }
+        .btn-primary {
+            background-color: #27548A;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #1d436e;
+        }
+        .btn-secondary {
+            background-color: #DDA853;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #c69545;
+        }
+        .content-container {
+            background-color: #FFFFFF;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header --> 
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo aumentado -->
+            <div class="flex items-center">
+                <a href="pagina-principal.html">
+                    <img src="Assets/logo-navbar.png.png" alt="Dotapet Logo" class="h-16">
+                </a>
+            </div>
+
+            <!-- Menu de navegação -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="pagina-de-busca.html" class="text-primary font-medium hover:text-secondary">Busca</a>
+                <a href="pagina-de-adocao.html" class="text-primary font-medium hover:text-secondary">Adoção</a>
+                <a href="pagina-conheca.html" class="text-primary font-medium hover:text-secondary">Conheça</a>
+                <a href="pagina-de-ajuda.html" class="text-primary font-medium hover:text-secondary">Ajude</a>
+            </nav>
+
+                <!-- Botões como links estilizados -->
+                <div class="hidden md:flex items-center gap-3">
+                <a href="pagina-anunciar.html" class="btn-secondary px-7 py-2 rounded-full font-semibold text-center">
+                    Anunciar
+                </a>
+                <a href="pagina-de-login.html" class="btn-secondary px-6 py-2 rounded-full font-semibold text-center">
+                    Entrar
+                </a>
+                </div>
+
+            <!-- Botão de menu mobile -->
+            <button class="md:hidden text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="py-12 md:py-20 text-center">
+            <div class="container mx-auto px-4">
+                <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Fundo Solidário Dotapet</h1>
+                <p class="text-xl text-light mb-8">Transformando vidas, uma pata de cada vez.</p>
+                <a href="https://wa.me/950210838">
+                    
+                <button class="btn-secondary px-8 py-3 rounded-lg font-medium text-lg hover:shadow-md transition-all">
+                    Doe Agora
+                </button>
+
+                </a>
+            </div>
+        </section>
+
+        <!-- Image Section -->
+        <section class="container mx-auto px-4 mb-12">
+            <div class="flex justify-center">
+                <img src="Assets/Images/dog-caridade.png" alt="Cachorro dando a pata" class="rounded-2xl max-w-full h-auto md:max-w-2xl shadow-lg">
+            </div>
+        </section>
+
+        <!-- Text Section -->
+        <section class="container mx-auto px-4 mb-16 max-w-4xl">
+            <div class="text-center">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-6">A Importância da Sua Contribuição</h2>
+                <p class="text-light leading-relaxed mb-6">
+                    O abandono animal no Brasil é alarmante: cerca de 30 milhões de cães e gatos vivem nas ruas, e 185 mil estão em abrigos com poucos recursos.
+                </p>
+                <p class="text-light leading-relaxed">
+                    Sua doação apoia resgates, cuidados e a chance de uma vida melhor para milhares de animais. Cada gesto conta para mudar essa realidade.
+                </p>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="bg-light py-12">
+            <div class="container mx-auto px-4 text-center">
+                <p class="text-primary text-xl md:text-2xl font-medium mb-8">
+                    Junte-se a nós nessa missão e transforme vidas hoje mesmo.
+                </p>
+                <a href="https://wa.me/11950210838">
+                
+                <button class="btn-secondary px-8 py-3 rounded-lg font-medium text-lg hover:shadow-md transition-all">
+                    Doe Agora
+                </button>
+
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="mb-6 md:mb-0">
+                    <img src="Assets/logo-navbar.png.png" alt="Dotapet Logo" class="h-20">
+                </div>
+                
+                <div class="flex space-x-6 mb-6 md:mb-0">
+                    <img src="Assets/comprasegura.png.png" alt="Compra Segura" class="h-10">
+                    <img src="Assets/unifecaf.png.png" alt="Unifecaf" class="h-10">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-semibold text-primary mb-3">Links Rápidos</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Início</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Sobre</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Adotar</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-primary mb-3">Ajuda</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">FAQ</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Contato</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Termos</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 pt-8 text-center">
+                <p class="text-gray-600">
+                    © 2025 Dotapet. Todos os direitos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dotapet - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .bg-primary {
+            background-color: #27548A;
+        }
+        .bg-secondary {
+            background-color: #DDA853;
+        }
+        .bg-light {
+            background-color: #F5EEDC;
+        }
+        .text-primary {
+            color: #27548A;
+        }
+        .text-secondary {
+            color: #DDA853;
+        }
+        .btn-primary {
+            background-color: #27548A;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #1d436e;
+        }
+        .btn-secondary {
+            background-color: #DDA853;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #c69545;
+        }
+        .login-container {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .input-field {
+            transition: all 0.3s ease;
+        }
+        .input-field:focus {
+            border-color: #DDA853;
+            box-shadow: 0 0 0 3px rgba(221, 168, 83, 0.2);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    
+<!-- Header --> 
+<header class="bg-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        <!-- Logo aumentado -->
+        <div class="flex items-center">
+            <a href="pagina-principal.html">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Dotapet Logo" class="h-16">
+
+
+            </a>
+        </div>
+
+
+
+        <!-- Botão de menu mobile -->
+        <button class="md:hidden text-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+    </div>
+</header>
+
+    <!-- Main Content -->
+    <main class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="w-full max-w-6xl login-container bg-white rounded-2xl overflow-hidden">
+            <div class="flex flex-col md:flex-row">
+                <!-- Left Side - Welcome Message -->
+                <div class="w-full md:w-1/2 bg-light p-12 flex flex-col justify-center">
+                    <div class="max-w-md mx-auto">
+                        <h1 class="text-3xl md:text-4xl font-bold text-primary mb-4">Bem-vindo de volta!</h1>
+                        <p class="text-gray-600 mb-8">
+                            Faça login para gerenciar seu perfil, adotar pets ou cadastrar animais para adoção. 
+                            Junte-se a nossa comunidade de amor pelos animais.
+                        </p>
+                        
+                        <div class="mt-8">
+                            <h3 class="text-lg font-semibold text-primary mb-4">Conecte-se conosco</h3>
+                            <div class="flex space-x-4">
+                                <a href="#" class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-colors">
+                                    <i class="fab fa-facebook-f text-xl"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-colors">
+                                    <i class="fab fa-instagram text-xl"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-colors">
+                                    <i class="fab fa-twitter text-xl"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-colors">
+                                    <i class="fab fa-youtube text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Side - Login Form -->
+                <div class="w-full md:w-1/2 p-12 flex flex-col justify-center">
+                    <div class="max-w-md mx-auto w-full">
+                        <h2 class="text-2xl font-bold text-primary mb-8 text-center">Faça seu login</h2>
+                        
+                        <form action="{{ url_for('autenticar')}}" method="POST" >
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                                <input id="email" name="email" type="email" autocomplete="email" required 
+                                    class="input-field w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent">
+                            </div>
+                            
+                            <div>
+                                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
+                                <input id="password" name="password" type="password" autocomplete="current-password" required 
+                                    class="input-field w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent">
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <input id="remember-me" name="remember-me" type="checkbox" 
+                                        class="h-4 w-4 text-secondary focus:ring-secondary border-gray-300 rounded">
+                                    <label for="remember-me" class="ml-2 block text-sm text-gray-700">
+                                        Lembrar de mim
+                                    </label>
+                                </div>
+                                
+                                <div class="text-sm">
+                                    <a href="pagina-esqueceu-senha.html" class="font-medium text-secondary hover:text-primary">
+                                        Esqueceu a senha?
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <button type="submit" 
+                                    class="btn-secondary w-full flex justify-center py-3 px-4 border border-transparent rounded-lg font-medium shadow-sm hover:shadow-md transition-all">
+                                    Entrar
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="mt-6 text-center">
+                            <p class="text-sm text-gray-600">
+                                Ainda não tem uma conta? 
+                                <a href="{{ url_for('cadastrar') }}" class="font-medium text-secondary hover:text-primary">
+                                    Cadastre-se
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="mb-6 md:mb-0">
+                    <img src="Assets/logo-navbar.png.png" alt="Dotapet Logo" class="h-16">
+                </div>
+                
+                <div class="flex space-x-6 mb-6 md:mb-0">
+                    <img src="Assets/comprasegura.png.png" alt="Compra Segura" class="h-10">
+                    <img src="Assets/unifecaf.png.png" alt="Unifecaf" class="h-10">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-semibold text-primary mb-3">Links Rápidos</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Início</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Sobre</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Adotar</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-primary mb-3">Ajuda</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">FAQ</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Contato</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Termos</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 pt-8 text-center">
+                <p class="text-gray-600">
+                    © 2025 Dotapet. Todos os direitos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.querySelector('.md\\:hidden');
+            const navLinks = document.querySelector('nav');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                navLinks.classList.toggle('hidden');
+                navLinks.classList.toggle('flex');
+                navLinks.classList.toggle('flex-col');
+                navLinks.classList.toggle('absolute');
+                navLinks.classList.toggle('top-16');
+                navLinks.classList.toggle('left-0');
+                navLinks.classList.toggle('right-0');
+                navLinks.classList.toggle('bg-white');
+                navLinks.classList.toggle('p-4');
+                navLinks.classList.toggle('space-y-4');
+                navLinks.classList.toggle('space-x-8');
+                navLinks.classList.toggle('shadow-md');
+            });
+        });
+    </script>
+</body>
+</html>

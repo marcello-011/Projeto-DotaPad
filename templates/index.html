@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dotapet - Adoção Responsável de Pets</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .bg-primary {
+            background-color: #27548A;
+        }
+        .bg-secondary {
+            background-color: #DDA853;
+        }
+        .bg-light {
+            background-color: #F5EEDC;
+        }
+        .text-primary {
+            color: #27548A;
+        }
+        .text-secondary {
+            color: #DDA853;
+        }
+        .btn-primary {
+            background-color: #27548A;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #1d436e;
+        }
+        .btn-secondary {
+            background-color: #DDA853;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #c69545;
+        }
+        .pet-card {
+            transition: transform 0.3s ease;
+        }
+        .pet-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <!-- Header --> 
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo aumentado -->
+            <div class="flex items-center">
+                <a href="pagina-principal.html">
+                    <img src="assents/logo-navbar.png.png" alt="Dotapet Logo" class="h-16">
+                </a>
+            </div>
+
+            <!-- Menu de navegação -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="pagina-de-busca.html" class="text-primary font-medium hover:text-secondary">Busca</a>
+                <a href="pagina-de-adocao.html" class="text-primary font-medium hover:text-secondary">Adoção</a>
+                <a href="pagina-conheca.html" class="text-primary font-medium hover:text-secondary">Conheça</a>
+                <a href="pagina-de-ajuda.html" class="text-primary font-medium hover:text-secondary">Ajude</a>
+            </nav>
+
+                <!-- Botões como links estilizados -->
+                <div class="hidden md:flex items-center gap-3">
+                <a href="{{ url_for('anunciar') }}" class="btn-secondary px-7 py-2 rounded-full font-semibold text-center">
+                    Anunciar
+                </a>
+                <a href="{{ url_for('login') }}" class="btn-secondary px-6 py-2 rounded-full font-semibold text-center">
+                    Entrar
+                </a>
+                </div>
+
+            <!-- Botão de menu mobile -->
+            <button class="md:hidden text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+
+    <!-- Hero Section -->
+    <section class="bg-primary text-white py-16 md:py-24">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">
+                    Encontre, Adote, Ame. Dê uma nova chance aos nossos pets resgatados.
+                </h1>
+                <p class="text-xl mb-8 opacity-90">
+                    Na Dotapet, conectamos pets que precisam de um lar a pessoas dispostas <br> a dar amor e carinho. Navegue pelos animais disponíveis, encontre seu companheiro ideal e transforme uma vida hoje mesmo!
+                </p>
+                <a href="pagina-de-adocao.html">
+                    <button class="btn-secondary px-8 py-3 rounded-full font-semibold text-lg">
+                    Quero Adotar
+                </button>
+                </a>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="assents/Images/pets.png" alt="Pets felizes" class="max-w-md w-full">
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Pets Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-primary mb-12">
+                Conheça Alguns Pets Esperando um Lar
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Pet 1 -->
+                <div class="pet-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
+                    <img src="assents/Images/bob.png" alt="Gato Rex" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-primary mb-2">Rex</h3>
+                        <p class="text-gray-600 mb-4">Gato macho, 2 anos, castrado e vacinado. Adora brincar e receber carinho.</p>
+                        <button class="btn-primary w-full py-2 rounded-lg font-medium">
+                            Adotar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Pet 2 -->
+                <div class="pet-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
+                    <img src="assents/Images/rex.png" alt="Cachorro Bob" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-primary mb-2">Bob</h3>
+                        <p class="text-gray-600 mb-4">Cachorro macho, 3 anos, porte médio. Muito brincalhão e obediente.</p>
+                        <button class="btn-primary w-full py-2 rounded-lg font-medium">
+                            Adotar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Pet 3 -->
+                <div class="pet-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
+                    <img src="assents/Images/lunna.png" alt="Outro pet" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-primary mb-2">Luna</h3>
+                        <p class="text-gray-600 mb-4">Cadelinha fêmea, 1 ano, porte pequeno. Muito carinhosa e tranquila.</p>
+                        <button class="btn-primary w-full py-2 rounded-lg font-medium">
+                            Adotar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="pagina-de-adocao.html" class="text-secondary font-semibold underline hover:text-primary">
+                    Ver todos os pets disponíveis
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Adopt Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-primary mb-12">
+                Por que Adotar?
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Reason 1 -->
+                <div class="text-center p-6 rounded-lg">
+                    <div class="text-5xl mb-4">❤️</div>
+                    <h3 class="text-xl font-semibold text-primary mb-3">Salve uma vida</h3>
+                    <p class="text-gray-600">
+                        Cada adoção significa um animal resgatado que ganha uma segunda chance de viver com amor e dignidade.
+                    </p>
+                </div>
+                
+                <!-- Reason 2 -->
+                <div class="text-center p-6 rounded-lg">
+                    <div class="text-5xl mb-4">🐕</div>
+                    <h3 class="text-xl font-semibold text-primary mb-3">Ganhe um amigo fiel</h3>
+                    <p class="text-gray-600">
+                        Pets adotados desenvolvem um vínculo especial com seus tutores, retribuindo todo carinho com lealdade.
+                    </p>
+                </div>
+                
+                <!-- Reason 3 -->
+                <div class="text-center p-6 rounded-lg">
+                    <div class="text-5xl mb-4">🌎</div>
+                    <h3 class="text-xl font-semibold text-primary mb-3">Transforme o mundo</h3>
+                    <p class="text-gray-600">
+                        Com um simples gesto de amor, você ajuda a reduzir o número de animais abandonados e promove um mundo melhor.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-light">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-primary mb-6">
+                Pronto para transformar uma vida?
+            </h2>
+            <p class="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
+                Junte-se a nós nessa jornada de amor e responsabilidade. Seu novo melhor amigo está esperando por você!
+            </p>
+            <a href="pagina-de-adocao.html">
+
+            <button class="btn-primary px-10 py-4 rounded-full font-semibold text-lg">
+                Começar agora
+            </button>
+
+            </a>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="mb-6 md:mb-0">
+                    <img src="assents/logo-navbar.png.png" alt="Dotapet Logo" class="h-20">
+                </div>
+                
+                <div class="flex space-x-6 mb-6 md:mb-0">
+                    <img src="assents/comprasegura.png.png" alt="Compra Segura" class="h-10">
+                    <img src="assents/unifecaf.png.png" alt="Unifecaf" class="h-10">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-semibold text-primary mb-3">Links Rápidos</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Início</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Sobre</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Adotar</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-primary mb-3">Ajuda</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">FAQ</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Contato</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-secondary">Termos</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 pt-8 text-center">
+                <p class="text-gray-600">
+                    © 2025 Dotapet. Todos os direitos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.querySelector('.md\\:hidden');
+            const navLinks = document.querySelector('nav');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                navLinks.classList.toggle('hidden');
+                navLinks.classList.toggle('flex');
+                navLinks.classList.toggle('flex-col');
+                navLinks.classList.toggle('absolute');
+                navLinks.classList.toggle('top-16');
+                navLinks.classList.toggle('left-0');
+                navLinks.classList.toggle('right-0');
+                navLinks.classList.toggle('bg-white');
+                navLinks.classList.toggle('p-4');
+                navLinks.classList.toggle('space-y-4');
+                navLinks.classList.toggle('space-x-8');
+                navLinks.classList.toggle('shadow-md');
+            });
+        });
+    </script>
+</body>
+</html>
