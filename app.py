@@ -10,6 +10,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
+
+ola= 'jjnn'
+
 app = Flask(__name__, static_folder='assents')
 app.secret_key = 'dotapet'
 
