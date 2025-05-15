@@ -19,6 +19,10 @@ class Usuario(UserMixin, db.Model):
 
 
 
+
+
+
+
 class Pets(db.Model):
     __tablename__ = 'pets'
 
