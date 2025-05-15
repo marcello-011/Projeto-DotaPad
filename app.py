@@ -16,8 +16,6 @@ load_dotenv()
 
 
 
-
-
 app = Flask(__name__, static_folder='static/Assents')
 lm = LoginManager(app)
 app.secret_key = 'dotapet'

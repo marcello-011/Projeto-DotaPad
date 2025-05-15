@@ -19,4 +19,4 @@ class Config:
 
     UPLOAD_PATH = os.path.dirname(os.path.abspath(__file__)) + '/uploads'
 
-    tyttyff7t='ggg'
+    
