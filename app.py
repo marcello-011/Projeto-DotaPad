@@ -13,7 +13,7 @@ from flask_login import UserMixin
 load_dotenv()
 
 
-exemplo=0.1
+
 
 
 app = Flask(__name__, static_folder='static/Assents')
