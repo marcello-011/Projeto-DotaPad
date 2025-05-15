@@ -97,12 +97,12 @@ class Usuario(UserMixin, db.Model):
     data_cadastro = db.Column(db.DateTime, nullable=False)
     
 
-    def __init__(self, nome, email, senha, telefone, data_cadastro):
-        self.nome = nome
-        self.email = email
-        self.senha = senha
-        self.telefone = telefone
-        self.data_cadastro = data_cadastro
+#    def __init__(self, nome, email, senha, telefone, data_cadastro):
+#        self.nome = nome
+  #      self.email = email
+ #       self.senha = senha
+   #     self.telefone = telefone
+    #    self.data_cadastro = data_cadastro
 
 
 
@@ -188,10 +188,56 @@ def autenticar():
     else:
         flash('Usuario não logado')
         return redirect('/login')
-
+    
 
 
 @app.route('/cadastro', methods=['GET', 'POST'])
+def cadastrar():
+    try:
+        if request.method == 'POST':
+            nome = request.form['nome']
+            sobrenome = request.form['sobrenome']
+            nascimento = request.form['nascimento']
+            telefone = request.form['telefone']
+            pet_preferido = request.form['pet']
+            email = request.form['email']
+            senha = request.form['senha']
+
+            novo_usuario = Usuario(
+                nome=nome,
+                sobrenome=sobrenome,
+                data_nascimento=nascimento,
+                pet_preferido=pet_preferido,
+                email=email,
+                senha=senha,
+                telefone=telefone,
+                data_cadastro=datetime.now()
+            )
+            
+            db.session.add(novo_usuario)
+            db.session.commit()
+
+            login_user(novo_usuario)
+            session['usuario_id'] = novo_usuario.id
+            print(f"Usuário {novo_usuario.nome} logado com sucesso!")
+
+            # Redireciona para a página de login após o cadastro bem-sucedido
+            return redirect(url_for('login'))
+
+        return render_template('cadastro.html')  # Caso seja GET, renderiza o formulário
+
+    except Exception as e:
+        # Exibindo o erro para depuração
+        print(f"Erro durante o cadastro: {e}")
+        flash('Houve um erro ao tentar cadastrar o usuário. Tente novamente.')
+        return redirect(url_for('cadastrar'))  # Redireciona para a página de cadastro novamente
+
+
+
+
+
+
+'''@app.route('/cadastro', methods=['GET', 'POST'])
 def cadastrar():
     if request.method == 'GET':
         return render_template('cadastro.html')
@@ -212,7 +258,7 @@ def cadastrar():
 
 
 
-        return redirect(url_for('login'))
+        return redirect(url_for('login'))'''
 # cadastro = Cadastro(nome, sobrenome, nascimento, telefone, pet_preferido, email, senha)
     #return render_template('cadastro.html')
 
