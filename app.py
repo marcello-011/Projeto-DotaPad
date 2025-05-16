@@ -4,10 +4,20 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
 from dotenv import load_dotenv
+from flask_mail import Mail, Message
 
 load_dotenv()
 
 app = Flask(__name__, static_folder='static/Assents')
+
+# Configuração do Flask-Mail com base no .env
+app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
+app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT'))
+app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS') == 'True'
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+
+mail = Mail(app)
 
 # Configurações
 app.secret_key = os.getenv('SECRET_KEY') or 'minha_chave_secreta'
@@ -31,6 +41,9 @@ class Usuario(UserMixin, db.Model):
     telefone = db.Column(db.String(20), nullable=True)
     data_cadastro = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     pet_preferido_id = db.Column(db.String(10))
+    nascimento = db.Column(db.Date, nullable=True) 
+
+
 
     # Relações com outros modelos
     pets = db.relationship('Pet', backref='usuario', lazy=True)
@@ -169,6 +182,8 @@ def cadastrar():
         senha = request.form['senha']  # Ideal: hash
         telefone = request.form.get('telefone', '')
         pet_preferido_id = request.form.get('pet_preferido_id')
+        nascimento_str = request.form.get('nascimento')
+        nascimento = datetime.strptime(nascimento_str, "%Y-%m-%d").date() if nascimento_str else None
 
         # Verificar se usuário já existe
         if Usuario.query.filter_by(email=email).first():
@@ -181,15 +196,30 @@ def cadastrar():
             email=email,
             senha=senha,
             telefone=telefone,
+            pet_preferido_id=pet_preferido_id,
+            nascimento=nascimento,
             data_cadastro=datetime.utcnow()
-            
         )
         db.session.add(novo_usuario)
         db.session.commit()
+
+        # === ENVIO DO E-MAIL ===
+        try:
+            msg = Message(
+                subject='Cadastro realizado com sucesso!',
+                sender=app.config['MAIL_USERNAME'],
+                recipients=[email],
+                body=f'Olá {nome},\n\nSeu cadastro foi concluído com sucesso!\n\nObrigado por se registrar.\n Seja Bem-Vindo a DotaPet'
+            )
+            mail.send(msg)
+        except Exception as e:
+            print(f"Erro ao enviar email: {e}")
+
         flash('Usuário cadastrado com sucesso!')
         return redirect(url_for('login'))
 
     return render_template('cadastro.html')
+
 
 if __name__ == '__main__':
     with app.app_context():

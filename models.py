@@ -1,21 +1,22 @@
 # models.py
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from datetime import datetime
 
 from database import db  # Puxando a instância correta de db
 
 class Usuario(UserMixin, db.Model):
     __tablename__ = 'usuarios'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nome = db.Column(db.String(100), nullable=False)
-    sobrenome = db.Column(db.String(100), nullable=False)
-    data_nascimento = db.Column(db.Date, nullable=False)
-    pet_preferido = db.Column(db.String(50), nullable=True)
-    email = db.Column(db.String(100), nullable=False)
+    sobrenome = db.Column(db.String(50), nullable=True)
+    email = db.Column(db.String(100), nullable=False, unique=True)
     senha = db.Column(db.String(255), nullable=False)
-    telefone = db.Column(db.String(11), nullable=False)
-    data_cadastro = db.Column(db.DateTime, nullable=False)
+    telefone = db.Column(db.String(20), nullable=True)
+    data_cadastro = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    pet_preferido_id = db.Column(db.String(10))
+    nascimento = db.Column(db.Date, nullable=True) 
 
 
 class Pets(db.Model):

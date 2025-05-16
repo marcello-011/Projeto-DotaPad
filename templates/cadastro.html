@@ -127,16 +127,24 @@
                 <input type="tel" id="phone" name="telefone" class="form-input" placeholder="Digite seu telefone" required>
             </div>
 
-            <select id="petPreference" name="pet_preferido_id" class="form-select">
-                <option value="" disabled selected>Selecione um pet</option>
-                <option value="" disabled selected>Cachorro</option>
-                <option value="" disabled selected>Gato</option>
-                <option value="" disabled selected>Passáro</option>
-                <option value="" disabled selected>Outro</option>
-                {% for pet in pets %}
-                    <option value="{{ pet.id }}">{{ pet.nome }} ({{ pet.especie }})</option>
-                {% endfor %}
-            </select>
+            <div class="mb-4">
+    <label for="petPreference" class="block text-gray-700 font-medium mb-2">Pet Preferido</label>
+    <select id="petPreference" name="pet_preferido_id" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        <option value="" disabled selected>Selecione um pet</option>
+        
+        <!-- Opções fixas -->
+        <option value="cachorro">Cachorro</option>
+        <option value="gato">Gato</option>
+        <option value="passaro">Pássaro</option>
+        <option value="outro">Outro</option>
+
+        <!-- Pets cadastrados dinamicamente -->
+        {% for pet in pets %}
+            <option value="{{ pet.id }}">{{ pet.nome }} ({{ pet.especie }})</option>
+        {% endfor %}
+    </select>
+</div>
+
 
 
             <div>
