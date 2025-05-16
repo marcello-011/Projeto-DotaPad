@@ -234,7 +234,8 @@ def cadastrar():
 
 
 
-
+if __name__ == '__main__':
+    app.run(debug=True)
 
 
 '''@app.route('/cadastro', methods=['GET', 'POST'])
@@ -286,8 +287,7 @@ def cadastrar():
 
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
 
 
 
