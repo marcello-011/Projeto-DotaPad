@@ -104,8 +104,7 @@
                 </a>
             </div>
             <div class="md:w-1/2 flex justify-center">
-                <img src="assents/Images/pets.png" alt="Pets felizes" class="max-w-md w-full">
-                <img src="{{ url_for('static', filename='Images/pets.png') }}" alt="Pets felizes" class="max-w-md w-full">
+                <img src="{{ url_for('static', filename='Imagens/pets.png') }}" alt="Pets felizes" class="max-w-md w-full">
                 
             </div>
         </div>
@@ -121,7 +120,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Pet 1 -->
                 <div class="pet-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
-                    <img src="{{ url_for('static', filename='Images/bob.png') }}" alt="Gato Rex" class="w-full h-64 object-cover">
+                    <img src="{{ url_for('static', filename='Imagens/bob.png') }}" alt="Gato Rex" class="w-full h-64 object-cover">
 
                     <div class="p-6">
                         <h3 class="text-xl font-semibold text-primary mb-2">Rex</h3>
@@ -134,7 +133,8 @@
                 
                 <!-- Pet 2 -->
                 <div class="pet-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
-                    <img src="assents/Images/rex.png" alt="Cachorro Bob" class="w-full h-64 object-cover">
+                    
+                    <img src="{{ url_for('static', filename='Imagens/rex.png') }}" alt="Cachorro Bob" class="w-full h-64 object-cover">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold text-primary mb-2">Bob</h3>
                         <p class="text-gray-600 mb-4">Cachorro macho, 3 anos, porte médio. Muito brincalhão e obediente.</p>
@@ -146,7 +146,7 @@
                 
                 <!-- Pet 3 -->
                 <div class="pet-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
-                    <img src="assents/Images/lunna.png" alt="Outro pet" class="w-full h-64 object-cover">
+                    <img src="{{ url_for('static', filename='Imagens/lunna.png') }}" alt="Outro pet" class="w-full h-64 object-cover">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold text-primary mb-2">Luna</h3>
                         <p class="text-gray-600 mb-4">Cadelinha fêmea, 1 ano, porte pequeno. Muito carinhosa e tranquila.</p>
@@ -228,12 +228,13 @@
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center mb-8">
                 <div class="mb-6 md:mb-0">
-                    <img src="assents/logo-navbar.png.png" alt="Dotapet Logo" class="h-20">
+                    <img src="{{ url_for('static', filename='logo-navbar.png') }}" alt="Dotapet Logo" class="h-20">
+                    
                 </div>
                 
                 <div class="flex space-x-6 mb-6 md:mb-0">
-                    <img src="assents/comprasegura.png.png" alt="Compra Segura" class="h-10">
-                    <img src="assents/unifecaf.png.png" alt="Unifecaf" class="h-10">
+                    <img src="{{ url_for('static', filename='comprasegura.png.png') }}" alt="Compra Segura" class="h-10">
+                    <img src="{{ url_for('static', filename='unifecaf.png.png') }}" alt="Unifecaf" class="h-10">
                 </div>
                 
                 <div class="grid grid-cols-2 gap-8">
