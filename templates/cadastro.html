@@ -127,15 +127,17 @@
                 <input type="tel" id="phone" name="telefone" class="form-input" placeholder="Digite seu telefone" required>
             </div>
 
-            <div>
-                <label for="petPreference" class="block text-gray-700 font-medium mb-2">Pet Preferido</label>
-                <select id="petPreference" name="pet" class="form-select" required>
-                    <option value="" disabled selected>Selecione sua preferência</option>
-                    <option value="dog">Cachorro</option>
-                    <option value="cat">Gato</option>
-                    <option value="both">Ambos</option>
-                </select>
-            </div>
+            <select id="petPreference" name="pet_preferido_id" class="form-select">
+                <option value="" disabled selected>Selecione um pet</option>
+                <option value="" disabled selected>Cachorro</option>
+                <option value="" disabled selected>Gato</option>
+                <option value="" disabled selected>Passáro</option>
+                <option value="" disabled selected>Outro</option>
+                {% for pet in pets %}
+                    <option value="{{ pet.id }}">{{ pet.nome }} ({{ pet.especie }})</option>
+                {% endfor %}
+            </select>
+
 
             <div>
                 <label for="email" class="block text-gray-700 font-medium mb-2">E-mail</label>

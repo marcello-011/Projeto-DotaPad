@@ -2,25 +2,20 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 
-db = SQLAlchemy()
+from database import db  # Puxando a instância correta de db
 
 class Usuario(UserMixin, db.Model):
     __tablename__ = 'usuarios'
 
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
-    sobrenome = db.Column(db.String(100), nullable=False)  # Adicionando sobrenome
-    data_nascimento = db.Column(db.Date, nullable=False)  # Adicionando data de nascimento
-    pet_preferido = db.Column(db.String(50), nullable=True)  # Adicionando pet preferido
+    sobrenome = db.Column(db.String(100), nullable=False)
+    data_nascimento = db.Column(db.Date, nullable=False)
+    pet_preferido = db.Column(db.String(50), nullable=True)
     email = db.Column(db.String(100), nullable=False)
     senha = db.Column(db.String(255), nullable=False)
     telefone = db.Column(db.String(11), nullable=False)
     data_cadastro = db.Column(db.DateTime, nullable=False)
-
-
-
-
-
 
 
 class Pets(db.Model):
@@ -37,31 +32,29 @@ class Pets(db.Model):
     foto_url = db.Column(db.String(255), nullable=False)
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=False)
 
+    # Relacionamento opcional com o usuário que cadastrou
+    usuario = db.relationship('Usuario', backref='pets', lazy=True)
+
 
 class Adocao(db.Model):
     __tablename__ = 'adocoes'
 
     id = db.Column(db.Integer, primary_key=True)
-    usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=False)  # Chave estrangeira
-    pet_id = db.Column(db.Integer, db.ForeignKey('pets.id'), nullable=False)  # Chave estrangeira para a tabela `pets`
-    
-    # Relacionamento com Usuario
-    usuario = db.relationship(
-        'Usuario',
-        backref='adocoes',
-        lazy=True,
-        primaryjoin='Adocao.usuario_id == Usuario.id'  # Especificando explicitamente a condição de junção
-    )
-    pet = db.relationship('Pet', backref='adocoes', lazy=True)  # Relacionamento com `Pet`
+    data_adocao = db.Column(db.DateTime, nullable=False)
+    usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=False)
+    pet_id = db.Column(db.Integer, db.ForeignKey('pets.id'), nullable=False)
+
+    usuario = db.relationship('Usuario', backref='adocoes', lazy=True)
+    pet = db.relationship('Pets', backref='adocoes', lazy=True)
 
 
+class Doacao(db.Model):
+    __tablename__ = 'doacoes'
 
+    id = db.Column(db.Integer, primary_key=True)
+    valor = db.Column(db.Float, nullable=False)
+    metodo_pagamento = db.Column(db.Enum('Pix', 'Credito', 'Debito', 'Boleto'), nullable=False)
+    data_doacao = db.Column(db.DateTime, nullable=False)
+    usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=False)
 
-
-#class Doacao(db.Model):
- ##
-   # id = db.Column(db.Integer, primary_key=True)
-    #valor = db.Column(db.Float, nullable=False)
-    #metodo_pagamento = db.Column(db.Enum('Pix', 'Credito', 'Debito', 'Boleto'), nullable=False)
-    #data_doacao = db.Column(db.DateTime, nullable=False)
-    #usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=False)
+    usuario = db.relationship('Usuario', backref='doacoes', lazy=True)

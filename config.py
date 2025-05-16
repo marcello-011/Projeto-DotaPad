@@ -4,19 +4,17 @@ from dotenv import load_dotenv
 
 # Carrega o .env
 load_dotenv()
+
 class Config:
-# Variáveis do .env
+    # Chave secreta do Flask
     SECRET_KEY = os.getenv('SECRET_KEY')
 
-    usuario = os.getenv('DB_USER')
-    senha = urllib.parse.quote(os.getenv('DB_PASSWORD'))
-    servidor = os.getenv('DB_HOST')
-    database = os.getenv('DB_NAME')
+    # Caminho do banco SQLite
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
 
-    SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{usuario}:{senha}@{servidor}/{database}'
-
+    # Desabilita rastreamento de modificações (melhora desempenho)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    UPLOAD_PATH = os.path.dirname(os.path.abspath(__file__)) + '/uploads'
-
+    # Pasta para uploads, se estiver usando
+    UPLOAD_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
     
