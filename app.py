@@ -6,7 +6,8 @@ import os
 from dotenv import load_dotenv
 from flask_mail import Mail, Message
 import sqlite3
-
+import threading
+from functools import wraps
 
 load_dotenv()
 
@@ -111,15 +112,40 @@ class DoacaoPet(db.Model):
 def load_user(user_id):
     return Usuario.query.get(int(user_id))
 
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'usuario_id' not in session:
+            # Redireciona para login e passa a URL original como parâmetro `next`
+            return redirect(url_for('login', next=request.path))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+def enviar_email_assincrono(app, msg):
+    with app.app_context():
+        mail.send(msg)
+
 # -------- ROTAS --------
 
 @app.route('/')
 def home():
     return render_template('index.html', titulo="DotaPet")
 
+#@app.route('/adoacao')
+#def home():
+#    return render_template('adoacao.html', titulo="DotaPet")
+
 @app.route("/pagina-principal")
 def pagina_principal():
     return render_template('home.html') 
+
+
+@app.route("/adotar")
+def adotar():
+    return render_template("adotar.html")
+
 
 
 @app.route('/esqueceu_senha', methods=['GET', 'POST'])
@@ -141,7 +167,7 @@ def esqueceu_senha():
                     recipients=[email],
                     body=f'Olá {usuario.nome},\n\nSua senha atual é: {usuario.senha}\n\nRecomendamos que você a altere após acessar sua conta.'
                 )
-                mail.send(msg)
+                threading.Thread(target=enviar_email_assincrono, args=(app, msg)).start()
                 flash('E-mail enviado com sucesso! Verifique sua caixa de entrada.', 'success')
 
 
@@ -209,14 +235,16 @@ def login():
                     recipients=[email],
                     body=f'Olá {usuario.nome},\n\nBem-vindo de volta, seu animalzinho está feliz em te ver! \n\nÉ sempre uma honra vê-lo por aqui.😁'
                 )
-                mail.send(msg)  # Envia o e-mail de boas-vindas
+                threading.Thread(target=enviar_email_assincrono, args=(app, msg)).start()
+  # Envia o e-mail de boas-vindas
 
             except Exception as e:
                 print(f"Erro ao enviar e-mail: {e}")
                 erro = "Erro ao enviar o e-mail. Tente novamente mais tarde."  # Caso o e-mail não seja enviado
 
             # Após login bem-sucedido e envio do e-mail, redireciona para a página principal
-            return redirect("/pagina-principal")
+            next_page = request.args.get('next')
+            return redirect(next_page or url_for('pagina_principal'))
         
         else:
             erro = "E-mail ou senha inválidos. Tente novamente."
@@ -270,7 +298,8 @@ def cadastrar():
                 recipients=[email],
                 body=f'Olá {nome},\n\nSeu cadastro foi concluído com sucesso!\n\nObrigado por se registrar.\n Seja Bem-Vindo a DotaPet'
             )
-            mail.send(msg)
+            threading.Thread(target=enviar_email_assincrono, args=(app, msg)).start()
+
         except Exception as e:
             print(f"Erro ao enviar email: {e}")
 
@@ -278,6 +307,17 @@ def cadastrar():
         return redirect(url_for('login'))
 
     return render_template('cadastro.html')
+
+
+@app.route("/verifica-login")
+def verifica_login():
+    prox = request.args.get("prox")
+
+    if "usuario_id" in session:
+        return redirect(url_for(prox))  # redireciona para a rota desejada se estiver logado
+    else:
+        return redirect(url_for("login", prox=prox))  # envia para o login com parâmetro de retorno
+
 
 
 if __name__ == '__main__':
