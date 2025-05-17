@@ -2,9 +2,11 @@ from flask import Flask, render_template, request, redirect, session, flash, url
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user, UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-import os
+import os 
 from dotenv import load_dotenv
 from flask_mail import Mail, Message
+import sqlite3
+
 
 load_dotenv()
 
@@ -115,6 +117,41 @@ def load_user(user_id):
 def home():
     return render_template('index.html', titulo="DotaPet")
 
+@app.route("/pagina-principal")
+def pagina_principal():
+    return render_template('home.html') 
+
+
+@app.route('/esqueceu_senha', methods=['GET', 'POST'])
+def esqueceu_senha():
+    if request.method == 'POST':
+        email = request.form.get('email')
+
+        # Buscar o usuário no banco de dados
+        usuario = Usuario.query.filter_by(email=email).first()
+        print(f"Usuário encontrado: {usuario.nome}, email: {usuario.email}, senha: {usuario.senha}")
+
+
+        if usuario:
+            try:
+                # Enviar a senha por e-mail
+                msg = Message(
+                    subject='Recuperação de Senha - Dotapet',
+                    sender=app.config['MAIL_USERNAME'],
+                    recipients=[email],
+                    body=f'Olá {usuario.nome},\n\nSua senha atual é: {usuario.senha}\n\nRecomendamos que você a altere após acessar sua conta.'
+                )
+                mail.send(msg)
+                flash('E-mail enviado com sucesso! Verifique sua caixa de entrada.', 'success')
+
+
+            except Exception as e:
+                flash(f'Erro ao enviar e-mail: {e}', 'danger')
+        else:
+            flash('E-mail não encontrado.', 'danger')
+
+    return render_template('esqueceu_senha.html')
+
 @app.route('/anunciar', methods=['GET', 'POST'])
 @login_required
 def anunciar():
@@ -149,22 +186,44 @@ def listar_animais():
     animais = Pet.query.filter_by(disponivel=True).all()
     return render_template('animais.html', animais=animais)
 
-@app.route('/login', methods=['GET', 'POST'])
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == 'POST':
-        email = request.form['email']
-        senha = request.form['senha']
+    erro = None
 
+    if request.method == "POST":
+        email = request.form["email"]
+        senha = request.form["password"]
+
+        # Usando SQLAlchemy para consultar a tabela usuarios
         usuario = Usuario.query.filter_by(email=email).first()
-        if usuario and usuario.senha == senha:  # Aqui ideal usar hash/senha segura
-            login_user(usuario)
-            flash(f'Bem vindo {usuario.nome}!')
-            return redirect(url_for('home'))
-        else:
-            flash('Email ou senha incorretos.')
-            return redirect(url_for('login'))
 
-    return render_template('login.html')
+        if usuario and usuario.senha == senha:  # Comparando a senha com a armazenada
+            session["usuario_id"] = usuario.id  # Cria a sessão para o usuário logado
+
+            try:
+                # Enviar o e-mail de boas-vindas após o login bem-sucedido
+                msg = Message(
+                    subject='Bem-vindo de volta!!',
+                    sender=app.config['MAIL_USERNAME'],
+                    recipients=[email],
+                    body=f'Olá {usuario.nome},\n\nBem-vindo de volta, seu animalzinho está feliz em te ver! \n\nÉ sempre uma honra vê-lo por aqui.😁'
+                )
+                mail.send(msg)  # Envia o e-mail de boas-vindas
+
+            except Exception as e:
+                print(f"Erro ao enviar e-mail: {e}")
+                erro = "Erro ao enviar o e-mail. Tente novamente mais tarde."  # Caso o e-mail não seja enviado
+
+            # Após login bem-sucedido e envio do e-mail, redireciona para a página principal
+            return redirect("/pagina-principal")
+        
+        else:
+            erro = "E-mail ou senha inválidos. Tente novamente."
+
+    return render_template("login.html", erro=erro)
+
+
 
 @app.route('/logout')
 @login_required

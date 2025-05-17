@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dotapet - Redefinição de Senha</title>
+    <title>{{Dotapet}} - Redefinição de Senha</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -98,18 +98,19 @@
                     Informe um e-mail e enviaremos um link para recuperação da sua senha.
                 </p>
                 
-                <form class="space-y-6">
-                    <div>
-                        <label for="email" class="block text-gray-700 font-medium mb-2">E-mail</label>
-                        <input type="email" id="email" class="form-input" placeholder="Digite seu e-mail cadastrado" required>
-                    </div>
-                    
-                    <div class="pt-4">
-                        <button type="submit" class="btn-secondary w-full py-3 rounded-lg font-bold hover:shadow-md transition-all">
-                            Enviar o link de recuperação
-                        </button>
-                    </div>
-                </form>
+                <form method="POST" action="{{ url_for('esqueceu_senha') }}" class="space-y-6">
+                <div>
+                    <label for="email" class="block text-gray-700 font-medium mb-2">E-mail</label>
+                    <input type="email" name="email" id="email" class="form-input" placeholder="Digite seu e-mail cadastrado" required>
+                </div>
+                
+                <div class="pt-4">
+                    <button type="submit" class="btn-secondary w-full py-3 rounded-lg font-bold hover:shadow-md transition-all">
+                        Enviar o link de recuperação
+                    </button>
+                </div>
+            </form>
+
             </div>
         </div>
     </main>
@@ -167,4 +168,4 @@
         });
     </script>
 </body>
-</html>
+</html> form

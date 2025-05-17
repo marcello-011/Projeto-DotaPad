@@ -114,6 +114,10 @@
                 <div class="w-full md:w-1/2 p-12 flex flex-col justify-center">
                     <div class="max-w-md mx-auto w-full">
                         <h2 class="text-2xl font-bold text-primary mb-8 text-center">Faça seu login</h2>
+
+                {% if erro %}
+                    <p class="text-red-600 text-sm text-center mb-4">{{ erro }}</p>
+                {% endif %}
                         
                         <form action="{{ url_for('login')}}" method="POST" >
                             <div>
@@ -138,7 +142,7 @@
                                 </div>
                                 
                                 <div class="text-sm">
-                                    <a href="pagina-esqueceu-senha.html" class="font-medium text-secondary hover:text-primary">
+                                    <a href="{{ url_for('esqueceu_senha') }}" class="font-medium text-secondary hover:text-primary">
                                         Esqueceu a senha?
                                     </a>
                                 </div>
