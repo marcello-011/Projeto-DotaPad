@@ -88,7 +88,8 @@
             <!-- Logo aumentado -->
             <div class="flex items-center">
                 <a href="pagina-principal.html">
-                    <img src="assents/logo-navbar.png.png" alt="Dotapet Logo" class="h-16">
+            <img src="{{ url_for('static', filename='logo-navbar.png') }}" alt="Dotapet Logo" class="h-16" />
+                    
                 </a>
             </div>
 
@@ -136,7 +137,8 @@
             <div class="flex flex-col md:flex-row gap-8">
                 <!-- Image - Hidden on mobile -->
                 <div class="hidden md:block md:w-1/2 lg:w-2/5">
-                    <img src="assents/Images/dog-preto.png.png" alt="Cachorro preto olhando para frente" class="rounded-2xl w-full h-auto object-cover shadow-lg">
+                    <img src="{{ url_for('static', filename='imagens/dog-preto.png.png') }}" alt="Cachorro preto olhando para frente" class="rounded-2xl w-full h-auto object-cover shadow-lg">
+                    
                 </div>
                 
                 <!-- Form -->
@@ -145,6 +147,11 @@
                         <div>
                             <label for="name" class="block text-primary font-medium mb-2">Nome</label>
                             <input type="text" id="name" class="form-input" placeholder="Digite o nome do pet">
+                        </div>
+
+                        <div>
+                            <label for="name" class="block text-primary font-medium mb-2">Contato do doador</label>
+                            <input type="text" id="name" class="form-input" placeholder="Digite o contato do doador">
                         </div>
                         
                         <div>
@@ -211,12 +218,15 @@
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center mb-8">
                 <div class="mb-6 md:mb-0">
-                    <img src="Assets/logo-navbar.png.png" alt="Dotapet Logo" class="h-20">
+                    <img src="{{ url_for('static', filename='logo-navbar.png') }}" alt="Dotapet Logo" class="h-20">
+                    
                 </div>
                 
                 <div class="flex space-x-6 mb-6 md:mb-0">
-                    <img src="Assets/comprasegura.png.png" alt="Compra Segura" class="h-10">
-                    <img src="Assets/unifecaf.png.png" alt="Unifecaf" class="h-10">
+                    <img src="{{ url_for('static', filename='unifecaf.png.png') }}" alt="Compra Segura" class="h-10">
+                    
+                
+                    <img src="{{ url_for('static', filename='unifecaf.png.png') }}" alt="Unifecaf" class="h-10">
                 </div>
                 
                 <div class="grid grid-cols-2 gap-8">
