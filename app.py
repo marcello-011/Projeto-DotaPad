@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, redirect, session, flash, url_for
+from flask import Flask, render_template, request, redirect, session, flash, url_for, send_from_directory
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user, UserMixin
+from sqlalchemy import Enum
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os 
@@ -8,6 +9,9 @@ from flask_mail import Mail, Message
 import sqlite3
 import threading
 from functools import wraps
+from werkzeug.utils import secure_filename
+import uuid
+
 
 load_dotenv()
 
@@ -63,9 +67,9 @@ class Pet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
     especie = db.Column(db.String(40), nullable=False)
-    sexo = db.Column(db.Enum('Fêmea', 'Macho'), nullable=False)
+    sexo = db.Column(Enum('Fêmea', 'Macho', 'female', 'male', name='sexo_enum'), nullable=False)
     descricao = db.Column(db.Text, nullable=False)
-    tamanho = db.Column(db.Enum('Pequeno', 'Medio', 'Grande'), nullable=False)
+    tamanho = db.Column(Enum('Pequeno', 'Medio', 'Grande', 'small', 'medium', 'large', name='tamanho_enum'), nullable=False)   
     disponivel = db.Column(db.Boolean, nullable=False, default=True)
     data_cadastro = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     foto_url = db.Column(db.String(255), nullable=True)
@@ -178,17 +182,49 @@ def esqueceu_senha():
 
     return render_template('esqueceu_senha.html')
 
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
+
+
 @app.route('/anunciar', methods=['GET', 'POST'])
 @login_required
 def anunciar():
+    if current_user.is_authenticated:
+        usuario_id = current_user.id  # Garantindo que o usuário está logado
+    else:
+        flash("Você precisa estar logado para anunciar.", "danger")
+        return redirect(url_for('login'))
+
     if request.method == 'POST':
         nome = request.form['nome']
         especie = request.form['especie']
         sexo = request.form['sexo']
-        tamanho = request.form['tamanho']
+        tamanho = request.form.get('tamanho')
         descricao = request.form['descricao']
-        foto_url = request.form['foto_url']
-        usuario_id = current_user.id  # usuário logado
+        foto_url = request.files.get('foto_url')
+        caminho_arquivo = None
+
+        # Verifique se a pasta 'uploads' existe, se não, crie-a
+        UPLOAD_FOLDER = os.path.join('static', 'uploads')  # Ajuste para a pasta dentro de static
+        if not os.path.exists(UPLOAD_FOLDER):
+            os.makedirs(UPLOAD_FOLDER)
+
+        # Defina o caminho da pasta de uploads no app
+        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+        # Salve a foto na pasta 'uploads' se o usuário enviar uma foto
+        if foto_url and foto_url.filename != '':
+            filename = secure_filename(foto_url.filename)  # Garante que o nome seja seguro
+            unique_filename = f"{uuid.uuid4().hex}_{filename}"  # Gera um nome único
+            caminho_arquivo = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+            foto_url.save(caminho_arquivo)  # Salva o arquivo fisicamente
+            foto_url_db = f'uploads/{unique_filename}'  # Caminho que será salvo no banco de dados
+        else:
+            foto_url_db = None  # Se não houver foto, salva None no banco de dados
 
         novo_pet = Pet(
             nome=nome,
@@ -197,20 +233,18 @@ def anunciar():
             tamanho=tamanho,
             descricao=descricao,
             disponivel=True,
-            foto_url=foto_url,
+            foto_url=foto_url_db,  # Armazena o caminho da foto no banco
             usuario_id=usuario_id
         )
+
         db.session.add(novo_pet)
         db.session.commit()
+
         flash('Pet anunciado com sucesso!')
-        return redirect(url_for('listar_animais'))
+        return redirect(url_for('listar_animais'))  # Redireciona para a página de animais listados
 
     return render_template('anunciar.html')
 
-@app.route('/animais')
-def listar_animais():
-    animais = Pet.query.filter_by(disponivel=True).all()
-    return render_template('animais.html', animais=animais)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -220,15 +254,14 @@ def login():
     if request.method == "POST":
         email = request.form["email"]
         senha = request.form["password"]
+        next_page = request.form.get('next')  # <-- pegar do form POST
 
-        # Usando SQLAlchemy para consultar a tabela usuarios
         usuario = Usuario.query.filter_by(email=email).first()
 
-        if usuario and usuario.senha == senha:  # Comparando a senha com a armazenada
-            session["usuario_id"] = usuario.id  # Cria a sessão para o usuário logado
+        if usuario and usuario.senha == senha:
+            login_user(usuario)  # <-- aqui é a correção!
 
             try:
-                # Enviar o e-mail de boas-vindas após o login bem-sucedido
                 msg = Message(
                     subject='Bem-vindo de volta!!',
                     sender=app.config['MAIL_USERNAME'],
@@ -236,21 +269,23 @@ def login():
                     body=f'Olá {usuario.nome},\n\nBem-vindo de volta, seu animalzinho está feliz em te ver! \n\nÉ sempre uma honra vê-lo por aqui.😁'
                 )
                 threading.Thread(target=enviar_email_assincrono, args=(app, msg)).start()
-  # Envia o e-mail de boas-vindas
 
             except Exception as e:
                 print(f"Erro ao enviar e-mail: {e}")
-                erro = "Erro ao enviar o e-mail. Tente novamente mais tarde."  # Caso o e-mail não seja enviado
+                erro = "Erro ao enviar o e-mail. Tente novamente mais tarde."
 
-            # Após login bem-sucedido e envio do e-mail, redireciona para a página principal
             next_page = request.args.get('next')
             return redirect(next_page or url_for('pagina_principal'))
-        
+
         else:
             erro = "E-mail ou senha inválidos. Tente novamente."
 
-    return render_template("login.html", erro=erro)
+    else:
+        # Se for GET, pegar o next da query string para repassar no form
+        next_page = request.args.get('next')
 
+
+    return render_template("login.html", erro=erro)
 
 
 @app.route('/logout')
@@ -317,6 +352,13 @@ def verifica_login():
         return redirect(url_for(prox))  # redireciona para a rota desejada se estiver logado
     else:
         return redirect(url_for("login", prox=prox))  # envia para o login com parâmetro de retorno
+    
+
+@app.route('/animais')
+def listar_animais():
+    animais = Pet.query.filter_by(disponivel=True).all()
+    return render_template('animais.html', animais=animais)
+
 
 
 

@@ -143,20 +143,20 @@
                 
                 <!-- Form -->
                 <div class="w-full md:w-1/2 lg:w-3/5">
-                    <form class="space-y-6" action="{{ url_for('anunciar') }}" method="POST">
+                    <form class="space-y-6" action="{{ url_for('anunciar') }}" method="POST" enctype="multipart/form-data">
                         <div>
                             <label for="name" class="block text-primary font-medium mb-2">Nome</label>
-                            <input type="text" id="name" class="form-input" placeholder="Digite o nome do pet">
+                            <input type="text" id="name" name="nome" class="form-input" placeholder="Digite o nome do pet">
                         </div>
 
-                        <div>
-                            <label for="name" class="block text-primary font-medium mb-2">Contato do doador</label>
-                            <input type="text" id="name" class="form-input" placeholder="Digite o contato do doador">
+                       <div>
+                            <label for="phone" class="block text-gray-700 font-medium mb-2">Telefone</label>
+                            <input type="tel" id="phone" name="telefone" class="form-input" placeholder="Digite o telefone do doador" required>
                         </div>
                         
                         <div>
                             <label for="species" class="block text-primary font-medium mb-2">Espécie</label>
-                            <select id="species" class="form-select">
+                            <select id="especie" name="especie" class="form-select">
                                 <option value="" disabled selected>Selecione a espécie</option>
                                 <option value="dog">Cachorro</option>
                                 <option value="cat">Gato</option>
@@ -165,7 +165,7 @@
                         
                         <div>
                             <label for="gender" class="block text-primary font-medium mb-2">Sexo</label>
-                            <select id="gender" class="form-select">
+                            <select id="sexo" name="sexo"  class="form-select">
                                 <option value="" disabled selected>Selecione o sexo</option>
                                 <option value="female">Fêmea</option>
                                 <option value="male">Macho</option>
@@ -174,7 +174,7 @@
                         
                         <div>
                             <label for="size" class="block text-primary font-medium mb-2">Tamanho</label>
-                            <select id="size" class="form-select">
+                            <select id="tamanho" name="tamanho" class="form-select">
                                 <option value="" disabled selected>Selecione o tamanho</option>
                                 <option value="mini">Mini</option>
                                 <option value="small">Pequeno</option>
@@ -185,18 +185,21 @@
                         
                         <div>
                             <label for="age" class="block text-primary font-medium mb-2">Idade</label>
-                            <select id="age" class="form-select">
+                            <select id="idade" name="idade" class="form-select">
                                 <option value="" disabled selected>Selecione a idade</option>
                                 <option value="puppy">Filhote</option>
                                 <option value="adult">Adulto</option>
                                 <option value="senior">Sênior</option>
                             </select>
-                        </div>
-                        
+
                         <div>
+                            <label for="descricao" class="block text-primary font-medium mb-2">Descricao</label>
+                            <input type="text" id="descricao" name="descricao" class="form-input" placeholder="Descrição do pet">
+                        </div>
+
                             <label class="block text-primary font-medium mb-2">Foto</label>
                             <div class="file-upload">
-                                <input type="file" id="photo" class="file-upload-input" accept="image/*">
+                                <input type="file" id="photo" name="photo" class="file-upload-input" accept=".jpg">
                                 <label for="photo" class="file-upload-label">
                                     <i class="fas fa-camera mr-2"></i>
                                     Clique para adicionar uma foto
