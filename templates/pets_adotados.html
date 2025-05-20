@@ -118,7 +118,8 @@
         {% if pets_adotados %}
             {% for pet in pets_adotados %}
                 <div class="pet-card">
-                    <img src="{{ pet.foto_url }}" alt="Foto do pet">
+                    
+                    <img src="{{ url_for('static', filename='logo-navbar.png') }}" alt="Dotapet Logo" class="h-20">
                     <h3>{{ pet.nome }}</h3>
                     <p><strong>Espécie:</strong> {{ pet.especie }}</p>
                     <p><strong>Sexo:</strong> {{ pet.sexo }}</p>
