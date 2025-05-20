@@ -157,6 +157,11 @@ def adotar():
     return render_template("adotar.html")
 
 
+@app.route("/pets_adotados")
+def pets_adotados():
+    return render_template("pets_adotados.html")
+
+
 
 @app.route('/esqueceu_senha', methods=['GET', 'POST'])
 def esqueceu_senha():
