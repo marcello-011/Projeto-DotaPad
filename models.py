@@ -36,7 +36,6 @@ class Pets(db.Model):
     # Relacionamento opcional com o usuário que cadastrou
     usuario = db.relationship('Usuario', backref='pets', lazy=True)
 
-
 class Adocao(db.Model):
     __tablename__ = 'adocoes'
 

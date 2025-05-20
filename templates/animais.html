@@ -57,41 +57,41 @@
     
     <!-- Header --> 
     <header class="bg-white shadow-md sticky top-0 z-50">
-            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-                <!-- Logo aumentado -->
-                <div class="flex items-center">
-                    <a href="pagina-principal.html">
-                        <img src="Assets/logo-navbar.png.png" alt="Dotapet Logo" class="h-16">
-                    </a>
-                </div>
-
-                <!-- Menu de navegação -->
-                <nav class="hidden md:flex space-x-8">
-                    <a href="pagina-de-busca.html" class="text-primary font-medium hover:text-secondary">Busca</a>
-                    <a href="pagina-de-adocao.html" class="text-primary font-medium hover:text-secondary">Adoção</a>
-                    <a href="pagina-conheca.html" class="text-primary font-medium hover:text-secondary">Conheça</a>
-                    <a href="pagina-de-ajuda.html" class="text-primary font-medium hover:text-secondary">Ajude</a>
-                </nav>
-
-                    <!-- Botões como links estilizados -->
-                    <div class="hidden md:flex items-center gap-3">
-                    <a href="pagina-anunciar.html" class="btn-secondary px-7 py-2 rounded-full font-semibold text-center">
-                        Anunciar
-                    </a>
-                    <a href="pagina-de-login.html" class="btn-secondary px-6 py-2 rounded-full font-semibold text-center">
-                        Entrar
-                    </a>
-                    </div>
-
-                <!-- Botão de menu mobile -->
-                <button class="md:hidden text-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo aumentado -->
+            <div class="flex items-center">
+                <a href="pagina-principal.html">
+                    <img src="Assets/logo-navbar.png.png" alt="Dotapet Logo" class="h-16">
+                </a>
             </div>
+
+            <!-- Menu de navegação -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="pagina-de-busca.html" class="text-primary font-medium hover:text-secondary">Busca</a>
+                <a href="pagina-de-adocao.html" class="text-primary font-medium hover:text-secondary">Adoção</a>
+                <a href="pagina-conheca.html" class="text-primary font-medium hover:text-secondary">Conheça</a>
+                <a href="pagina-de-ajuda.html" class="text-primary font-medium hover:text-secondary">Ajude</a>
+            </nav>
+
+            <!-- Botões como links estilizados -->
+            <div class="hidden md:flex items-center gap-3">
+                <a href="pagina-anunciar.html" class="btn-secondary px-7 py-2 rounded-full font-semibold text-center">
+                    Anunciar
+                </a>
+                <a href="pagina-de-login.html" class="btn-secondary px-6 py-2 rounded-full font-semibold text-center">
+                    Entrar
+                </a>
+            </div>
+
+            <!-- Botão de menu mobile -->
+            <button class="md:hidden text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
     </header>
-img
+
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
         <!-- Page Title -->
@@ -140,10 +140,6 @@ img
                 <div class="mb-6">
                     <h3 class="font-semibold text-primary mb-3">Tamanho</h3>
                     <div class="space-y-2">
-                        <label class="flex items-center space-x-3">
-                            <input type="checkbox" class="filter-checkbox h-5 w-5 rounded border-gray-300 text-secondary focus:ring-secondary">
-                            <span class="text-gray-700">Mini</span>
-                        </label>
                         <label class="flex items-center space-x-3">
                             <input type="checkbox" class="filter-checkbox h-5 w-5 rounded border-gray-300 text-secondary focus:ring-secondary">
                             <span class="text-gray-700">Pequeno</span>
@@ -200,103 +196,29 @@ img
                 
                 <!-- Results Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Pet Card 1 -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
-                        <img src="Assets/Images/rex.png" alt="Cachorro para adoção" class="w-full h-48 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-xl font-bold text-primary">Rex</h3>
-                            <div class="flex items-center text-gray-600 text-sm mt-1">
-                                <span class="mr-3">Macho</span>
-                                <span>Adulto</span>
+                    {% for pet in animais %}
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
+                            {% if pet.foto_url %}
+                                <img src="{{ url_for('static', filename='uploads/' + pet.foto_url)  }}" alt="Foto do pet" class="w-full h-48 object-cover">
+                            {% else %}
+                                <img src="Assets/Images/default_pet_image.png" alt="Imagem padrão do pet" class="w-full h-48 object-cover">
+                            {% endif %}
+                        
+                            <div class="p-4">
+                                <h3 class="text-xl font-bold text-primary">{{ pet.nome }}</h3>
+                                <div class="flex items-center text-gray-600 text-sm mt-1">
+                                    <span class="mr-3">{{ pet.sexo }}</span>
+                                    <span>{{ pet.tamanho }}</span>
+                                </div>
+                                <p class="text-gray-600 mt-2 text-sm">{{ pet.descricao }}</p>
+                                <button class="btn-secondary w-full mt-4 py-2 px-4 rounded-lg font-medium">
+                                    Ver detalhes
+                                </button>
                             </div>
-                            <p class="text-gray-600 mt-2 text-sm">Labrador - Grande - 4 anos</p>
-                            <button class="btn-secondary w-full mt-4 py-2 px-4 rounded-lg font-medium">
-                                Ver detalhes
-                            </button>
                         </div>
-                    </div>
-                    
-                    <!-- Pet Card 2 -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
-                        <img src="Assets/Images/lunna.png" alt="Cachorro para adoção" class="w-full h-48 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-xl font-bold text-primary">Luna</h3>
-                            <div class="flex items-center text-gray-600 text-sm mt-1">
-                                <span class="mr-3">Fêmea</span>
-                                <span>Filhote</span>
-                            </div>
-                            <p class="text-gray-600 mt-2 text-sm">SRD - Pequeno - 3 meses</p>
-                            <button class="btn-secondary w-full mt-4 py-2 px-4 rounded-lg font-medium">
-                                Ver detalhes
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Pet Card 3 -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
-                        <img src="Assets/Images/goldenretriever.png" alt="Cachorro para adoção" class="w-full h-48 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-xl font-bold text-primary">Thor</h3>
-                            <div class="flex items-center text-gray-600 text-sm mt-1">
-                                <span class="mr-3">Macho</span>
-                                <span>Adulto</span>
-                            </div>
-                            <p class="text-gray-600 mt-2 text-sm">Golden Retriever - Grande - 5 anos</p>
-                            <button class="btn-secondary w-full mt-4 py-2 px-4 rounded-lg font-medium">
-                                Ver detalhes
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Pet Card 4 -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
-                        <img src="Assets/Images/poodle.png" alt="Cachorro para adoção" class="w-full h-48 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-xl font-bold text-primary">Mel</h3>
-                            <div class="flex items-center text-gray-600 text-sm mt-1">
-                                <span class="mr-3">Fêmea</span>
-                                <span>Sênior</span>
-                            </div>
-                            <p class="text-gray-600 mt-2 text-sm">Poodle - Pequeno - 10 anos</p>
-                            <button class="btn-secondary w-full mt-4 py-2 px-4 rounded-lg font-medium">
-                                Ver detalhes
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Pet Card 5 -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
-                        <img src="Assets/Images/beagle.png" alt="Cachorro para adoção" class="w-full h-48 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-xl font-bold text-primary">Bolt</h3>
-                            <div class="flex items-center text-gray-600 text-sm mt-1">
-                                <span class="mr-3">Macho</span>
-                                <span>Adulto</span>
-                            </div>
-                            <p class="text-gray-600 mt-2 text-sm">Beagle - Médio - 2 anos</p>
-                            <button class="btn-secondary w-full mt-4 py-2 px-4 rounded-lg font-medium">
-                                Ver detalhes
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Pet Card 6 -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
-                        <img src="Assets/Images/beagle-mini.png" alt="Cachorro para adoção" class="w-full h-48 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-xl font-bold text-primary">Nina</h3>
-                            <div class="flex items-center text-gray-600 text-sm mt-1">
-                                <span class="mr-3">Fêmea</span>
-                                <span>Filhote</span>
-                            </div>
-                            <p class="text-gray-600 mt-2 text-sm">SRD - Mini - 2 meses</p>
-                            <button class="btn-secondary w-full mt-4 py-2 px-4 rounded-lg font-medium">
-                                Ver detalhes
-                            </button>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
-                
+
                 <!-- Pagination -->
                 <div class="flex justify-center mt-8">
                     <nav class="flex items-center space-x-2">

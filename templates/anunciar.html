@@ -144,6 +144,10 @@
                 <!-- Form -->
                 <div class="w-full md:w-1/2 lg:w-3/5">
                     <form class="space-y-6" action="{{ url_for('anunciar') }}" method="POST" enctype="multipart/form-data">
+
+                        <input type="file" name="foto_url">
+                        <input type="submit" value="Anunciar">
+
                         <div>
                             <label for="name" class="block text-primary font-medium mb-2">Nome</label>
                             <input type="text" id="name" name="nome" class="form-input" placeholder="Digite o nome do pet">
@@ -176,7 +180,6 @@
                             <label for="size" class="block text-primary font-medium mb-2">Tamanho</label>
                             <select id="tamanho" name="tamanho" class="form-select">
                                 <option value="" disabled selected>Selecione o tamanho</option>
-                                <option value="mini">Mini</option>
                                 <option value="small">Pequeno</option>
                                 <option value="medium">Médio</option>
                                 <option value="large">Grande</option>
@@ -199,7 +202,7 @@
 
                             <label class="block text-primary font-medium mb-2">Foto</label>
                             <div class="file-upload">
-                                <input type="file" id="photo" name="photo" class="file-upload-input" accept=".jpg">
+                                <input type="file" id="photo" name="photo" class="file-upload-input" accept=".jpg,.jpeg,.png">
                                 <label for="photo" class="file-upload-label">
                                     <i class="fas fa-camera mr-2"></i>
                                     Clique para adicionar uma foto

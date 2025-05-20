@@ -69,7 +69,7 @@ class Pet(db.Model):
     especie = db.Column(db.String(40), nullable=False)
     sexo = db.Column(Enum('Fêmea', 'Macho', 'female', 'male', name='sexo_enum'), nullable=False)
     descricao = db.Column(db.Text, nullable=False)
-    tamanho = db.Column(Enum('Pequeno', 'Medio', 'Grande', 'small', 'medium', 'large', name='tamanho_enum'), nullable=False)   
+    tamanho = db.Column(db.String(20), nullable=False)
     disponivel = db.Column(db.Boolean, nullable=False, default=True)
     data_cadastro = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     foto_url = db.Column(db.String(255), nullable=True)
@@ -104,7 +104,7 @@ class DoacaoPet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     pet_id = db.Column(db.Integer, db.ForeignKey('pets.id'), nullable=False)
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=False)
-    status = db.Column(db.Enum('pendente', 'adotado', 'cancelado'), default='pendente')
+    status = db.Column(db.Enum('pendente', 'adotado', 'cancelado', name='status_enum'), default='pendente')
     data_doacao = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def __repr__(self):
@@ -144,6 +144,12 @@ def home():
 @app.route("/pagina-principal")
 def pagina_principal():
     return render_template('home.html') 
+
+
+@app.route("/busca")
+def busca():
+    return render_template('busca.html') 
+
 
 
 @app.route("/adotar")
@@ -190,14 +196,12 @@ def uploaded_file(filename):
 
 
 
+
+
 @app.route('/anunciar', methods=['GET', 'POST'])
-@login_required
 def anunciar():
-    if current_user.is_authenticated:
-        usuario_id = current_user.id  # Garantindo que o usuário está logado
-    else:
-        flash("Você precisa estar logado para anunciar.", "danger")
-        return redirect(url_for('login'))
+    # Se o usuário estiver logado, usa o ID dele. Senão, salva como None.
+    usuario_id = current_user.id if current_user.is_authenticated else None
 
     if request.method == 'POST':
         nome = request.form['nome']
@@ -209,22 +213,22 @@ def anunciar():
         caminho_arquivo = None
 
         # Verifique se a pasta 'uploads' existe, se não, crie-a
-        UPLOAD_FOLDER = os.path.join('static', 'uploads')  # Ajuste para a pasta dentro de static
+        UPLOAD_FOLDER = os.path.join('static', 'uploads')  # Pasta dentro de static
         if not os.path.exists(UPLOAD_FOLDER):
             os.makedirs(UPLOAD_FOLDER)
 
-        # Defina o caminho da pasta de uploads no app
         app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-        # Salve a foto na pasta 'uploads' se o usuário enviar uma foto
+        # Salva a foto se foi enviada
         if foto_url and foto_url.filename != '':
-            filename = secure_filename(foto_url.filename)  # Garante que o nome seja seguro
-            unique_filename = f"{uuid.uuid4().hex}_{filename}"  # Gera um nome único
+            filename = secure_filename(foto_url.filename)
+            unique_filename = f"{uuid.uuid4().hex}_{filename}"  # Apenas uma vez
             caminho_arquivo = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
-            foto_url.save(caminho_arquivo)  # Salva o arquivo fisicamente
-            foto_url_db = f'uploads/{unique_filename}'  # Caminho que será salvo no banco de dados
+            foto_url.save(caminho_arquivo)
+            foto_url_db = f'uploads/{unique_filename}'
+
         else:
-            foto_url_db = None  # Se não houver foto, salva None no banco de dados
+            foto_url_db = None
 
         novo_pet = Pet(
             nome=nome,
@@ -233,18 +237,27 @@ def anunciar():
             tamanho=tamanho,
             descricao=descricao,
             disponivel=True,
-            foto_url=foto_url_db,  # Armazena o caminho da foto no banco
-            usuario_id=usuario_id
+            foto_url=foto_url_db,
+            usuario_id=usuario_id  # Pode ser None se o usuário não estiver logado
         )
 
         db.session.add(novo_pet)
         db.session.commit()
+        filename = secure_filename(foto_url.filename)
+        pet_id = novo_pet.id  # Aqui você obtém o ID do pet
+        extension = filename.rsplit('.', 1)[-1].lower()  # Para obter a extensão do arquivo (ex: jpg, png)
+        unique_filename = f"{pet_id}_{uuid.uuid4().hex}.{extension}"  # Combine ID e UUID para garantir unicidade
+        caminho_arquivo = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+
+            # Salve o arquivo
+        foto_url.save(caminho_arquivo)
+        novo_pet.foto_url = f'uploads/{unique_filename}'  # Salve o caminho da imagem no banco
+        db.session.commit()
 
         flash('Pet anunciado com sucesso!')
-        return redirect(url_for('listar_animais'))  # Redireciona para a página de animais listados
+        return redirect(url_for('listar_animais'))
 
     return render_template('anunciar.html')
-
 
 
 @app.route("/login", methods=["GET", "POST"])
