@@ -198,13 +198,14 @@
                 <!-- Results Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {% for pet in animais %}
-<div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
-    {% if pet.foto_url %}
-        <!-- Acesse o arquivo com o caminho relativo correto -->
-        <img src="{{ url_for('static', filename=pet.foto_url) }}" alt="Foto do pet" class="w-full h-48 object-cover">
-    {% else %}
-        <img src="Assets/Images/default_pet_image.png" alt="Imagem padrão do pet" class="w-full h-48 object-cover">
-    {% endif %}
+                <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
+                    {% if pet.foto_url %}
+                        <!-- Acesse o arquivo com o caminho relativo correto -->
+                        <img src="{{ url_for('static', filename=pet.foto_url) }}" alt="Foto do pet" class="w-full h-48 object-cover">
+
+                    {% else %}
+                        <img src="Assets/Images/default_pet_image.png" alt="Imagem padrão do pet" class="w-full h-48 object-cover">
+                    {% endif %}
                         
                             <div class="p-4">
                                 <h3 class="text-xl font-bold text-primary">{{ pet.nome }}</h3>
@@ -250,12 +251,12 @@
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center mb-8">
                 <div class="mb-6 md:mb-0">
-                    <img src="{{ url_for('static', filename='logo-navbar.png') }}" alt="Dotapet Logo" class="h-20">
+                    <img src="Assets/logo-navbar.png.png" alt="Dotapet Logo" class="h-20">
                 </div>
                 
                 <div class="flex space-x-6 mb-6 md:mb-0">
-                    <img src="{{ url_for('static', filename='comprasegura.png.png') }}" alt="Compra Segura" class="h-10">
-                    <img src="{{ url_for('static', filename='unifecaf.png.png') }}" alt="Dotapet Logo" class="h-20">
+                    <img src="Assets/comprasegura.png.png" alt="Compra Segura" class="h-10">
+                    <img src="Assets/unifecaf.png.png" alt="Dotapet Logo" class="h-20">
                     
                 </div>
                 
