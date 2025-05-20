@@ -198,12 +198,14 @@
                 <!-- Results Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {% for pet in animais %}
-                        <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
-                            {% if pet.foto_url %}
-                                <img src="{{ url_for('static', filename='uploads/' + pet.foto_url)  }}" alt="Foto do pet" class="w-full h-48 object-cover">
-                            {% else %}
-                                <img src="Assets/Images/default_pet_image.png" alt="Imagem padrão do pet" class="w-full h-48 object-cover">
-                            {% endif %}
+                <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
+                    {% if pet.foto_url %}
+                        <!-- Acesse o arquivo com o caminho relativo correto -->
+                        <img src="{{ url_for('static', filename=pet.foto_url) }}" alt="Foto do pet" class="w-full h-48 object-cover">
+
+                    {% else %}
+                        <img src="Assets/Images/default_pet_image.png" alt="Imagem padrão do pet" class="w-full h-48 object-cover">
+                    {% endif %}
                         
                             <div class="p-4">
                                 <h3 class="text-xl font-bold text-primary">{{ pet.nome }}</h3>
