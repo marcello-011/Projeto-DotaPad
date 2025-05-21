@@ -196,31 +196,28 @@
                 </div>
                 
                 <!-- Results Grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {% for pet in animais %}
-                <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
-                    {% if pet.foto_url %}
-                        <!-- Acesse o arquivo com o caminho relativo correto -->
-                        <img src="{{ url_for('static', filename=pet.foto_url) }}" alt="Foto do pet" class="w-full h-48 object-cover">
-
-                    {% else %}
-                        <img src="Assets/Images/default_pet_image.png" alt="Imagem padrão do pet" class="w-full h-48 object-cover">
-                    {% endif %}
-                        
-                            <div class="p-4">
-                                <h3 class="text-xl font-bold text-primary">{{ pet.nome }}</h3>
-                                <div class="flex items-center text-gray-600 text-sm mt-1">
-                                    <span class="mr-3">{{ pet.sexo }}</span>
-                                    <span>{{ pet.tamanho }}</span>
-                                </div>
-                                <p class="text-gray-600 mt-2 text-sm">{{ pet.descricao }}</p>
-                                <button class="btn-secondary w-full mt-4 py-2 px-4 rounded-lg font-medium">
-                                    Ver detalhes
-                                </button>
-                            </div>
-                        </div>
-                    {% endfor %}
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for pet in animais %}
+        <div class="bg-white rounded-xl overflow-hidden shadow-md pet-card">
+            {% if pet.foto_url %}
+                <img src="{{ url_for('static', filename=pet.foto_url) }}" alt="Foto do pet" class="w-full h-48 object-cover">
+            {% else %}
+                <img src="Assets/Images/default_pet_image.png" alt="Imagem padrão do pet" class="w-full h-48 object-cover">
+            {% endif %}
+            <div class="p-4">
+                <h3 class="text-xl font-bold text-primary">{{ pet.nome }}</h3>
+                <div class="flex items-center text-gray-600 text-sm mt-1">
+                    <span class="mr-3">{{ pet.sexo }}</span>
+                    <span>{{ pet.tamanho }}</span>
                 </div>
+                <p class="text-gray-600 mt-2 text-sm">{{ pet.descricao }}</p>
+                <button class="btn-secondary w-full mt-4 py-2 px-4 rounded-lg font-medium">
+                    Ver detalhes
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+</div>
 
                 <!-- Pagination -->
                 <div class="flex justify-center mt-8">
