@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{Dotapet}} - Anunciar</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dotapet - Anunciar</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
@@ -75,6 +75,7 @@
             text-align: center;
             cursor: pointer;
             color: #27548A;
+            user-select: none;
         }
         .file-upload-label:hover {
             background-color: rgba(221, 168, 83, 0.1);
@@ -88,37 +89,40 @@
             <!-- Logo aumentado -->
             <div class="flex items-center">
                 <a href="pagina-principal.html">
-            <img src="{{ url_for('static', filename='logo-navbar.png') }}" alt="Dotapet Logo" class="h-16" />
-            
-                    
+                    <img src="{{ url_for('static', filename='logo-navbar.png') }}" alt="Dotapet Logo" class="h-16" />
                 </a>
             </div>
 
             <!-- Menu de navegação -->
             <nav class="hidden md:flex space-x-8">
-                <a href="pagina-de-busca.html" class="text-primary font-medium hover:text-secondary">Busca</a>
-                <a href="pagina-de-adocao.html" class="text-primary font-medium hover:text-secondary">Adoção</a>
-                <a href="pagina-conheca.html" class="text-primary font-medium hover:text-secondary">Conheça</a>
-                <a href="pagina-de-ajuda.html" class="text-primary font-medium hover:text-secondary">Ajude</a>
-            </nav>
+                <a href="{{ url_for('busca') }}" class="text-primary font-medium hover:text-secondary">Busca</a>
+                <a href="{{ url_for('listar_animais') }}" class="text-primary font-medium hover:text-secondary">Adoção</a>
+                <a href="{{ url_for('pagina_conheca') }}" class="text-primary font-medium hover:text-secondary">Conheça</a>
+                <a href="{{ url_for('ajude') }}" class="text-primary font-medium hover:text-secondary">Ajude</a>
 
-                <!-- Botões como links estilizados -->
-                <div class="hidden md:flex items-center gap-3">
-                <a href="pagina-anunciar.html" class="btn-secondary px-7 py-2 rounded-full font-semibold text-center">
-                    Anunciar
-                </a>
-                <a href="pagina-de-login.html" class="btn-secondary px-6 py-2 rounded-full font-semibold text-center">
-                    Entrar
-                </a>
-                </div>
+            <!-- Botões como links estilizados -->
+            <div class="hidden md:flex items-center gap-3">
+
+
+            </div>
 
             <!-- Botão de menu mobile -->
-            <button class="md:hidden text-primary">
+            <button id="mobile-menu-button" class="md:hidden text-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
             </button>
         </div>
+
+        <!-- Mobile Menu -->
+        <nav id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <a href="pagina-de-busca.html" class="block px-4 py-2 text-primary font-medium hover:bg-secondary hover:text-white">Busca</a>
+            <a href="pagina-de-adocao.html" class="block px-4 py-2 text-primary font-medium hover:bg-secondary hover:text-white">Adoção</a>
+            <a href="pagina-conheca.html" class="block px-4 py-2 text-primary font-medium hover:bg-secondary hover:text-white">Conheça</a>
+            <a href="pagina-de-ajuda.html" class="block px-4 py-2 text-primary font-medium hover:bg-secondary hover:text-white">Ajude</a>
+            <a href="pagina-anunciar.html" class="block px-4 py-2 btn-secondary font-semibold text-center hover:bg-[#c69545]">Anunciar</a>
+            <a href="pagina-de-login.html" class="block px-4 py-2 btn-secondary font-semibold text-center hover:bg-[#c69545]">Entrar</a>
+        </nav>
     </header>
 
     <!-- Main Content -->
@@ -137,31 +141,27 @@
         <section class="container mx-auto px-4 mb-16">
             <div class="flex flex-col md:flex-row gap-8">
                 <!-- Image - Hidden on mobile -->
-                <div class="hidden md:block md:w-1/2 lg:w-2/5">
-                    <img src="{{ url_for('static', filename='imagens/dog-preto.png.png') }}" alt="Cachorro preto olhando para frente" class="rounded-2xl w-full h-auto object-cover shadow-lg">
-                    <img src="{{ url_for('static', filename='logo-navbar.png') }}" alt="Dotapet Logo" class="h-16">
+                <div class="hidden md:block md:w-1/2 lg:w-2/5 space-y-4">
+                    <img src="{{ url_for('static', filename='imagens/dog-preto.png.png') }}" alt="Cachorro preto olhando para frente" class="rounded-2xl w-full h-auto object-cover shadow-lg" />
+                    
                 </div>
             
                 <!-- Form -->
                 <div class="w-full md:w-1/2 lg:w-3/5">
                     <form class="space-y-6" action="{{ url_for('anunciar') }}" method="POST" enctype="multipart/form-data">
-
-                        <input type="file" name="foto_url">
-                        <input type="submit" value="Anunciar">
-
                         <div>
                             <label for="name" class="block text-primary font-medium mb-2">Nome</label>
-                            <input type="text" id="name" name="nome" class="form-input" placeholder="Digite o nome do pet">
+                            <input type="text" id="name" name="nome" class="form-input" placeholder="Digite o nome do pet" />
                         </div>
 
-                       <div>
+                        <div>
                             <label for="phone" class="block text-gray-700 font-medium mb-2">Telefone</label>
-                            <input type="tel" id="phone" name="telefone" class="form-input" placeholder="Digite o telefone do doador" required>
+                            <input type="tel" id="phone" name="telefone" class="form-input" placeholder="Digite o telefone do doador" required />
                         </div>
                         
                         <div>
-                            <label for="species" class="block text-primary font-medium mb-2">Espécie</label>
-                            <select id="especie" name="especie" class="form-select">
+                            <label for="especie" class="block text-primary font-medium mb-2">Espécie</label>
+                            <select id="especie" name="especie" class="form-select" required>
                                 <option value="" disabled selected>Selecione a espécie</option>
                                 <option value="dog">Cachorro</option>
                                 <option value="cat">Gato</option>
@@ -169,8 +169,8 @@
                         </div>
                         
                         <div>
-                            <label for="gender" class="block text-primary font-medium mb-2">Sexo</label>
-                            <select id="sexo" name="sexo"  class="form-select">
+                            <label for="sexo" class="block text-primary font-medium mb-2">Sexo</label>
+                            <select id="sexo" name="sexo" class="form-select" required>
                                 <option value="" disabled selected>Selecione o sexo</option>
                                 <option value="female">Fêmea</option>
                                 <option value="male">Macho</option>
@@ -178,8 +178,8 @@
                         </div>
                         
                         <div>
-                            <label for="size" class="block text-primary font-medium mb-2">Tamanho</label>
-                            <select id="tamanho" name="tamanho" class="form-select">
+                            <label for="tamanho" class="block text-primary font-medium mb-2">Tamanho</label>
+                            <select id="tamanho" name="tamanho" class="form-select" required>
                                 <option value="" disabled selected>Selecione o tamanho</option>
                                 <option value="small">Pequeno</option>
                                 <option value="medium">Médio</option>
@@ -188,22 +188,24 @@
                         </div>
                         
                         <div>
-                            <label for="age" class="block text-primary font-medium mb-2">Idade</label>
-                            <select id="idade" name="idade" class="form-select">
+                            <label for="idade" class="block text-primary font-medium mb-2">Idade</label>
+                            <select id="idade" name="idade" class="form-select" required>
                                 <option value="" disabled selected>Selecione a idade</option>
                                 <option value="puppy">Filhote</option>
                                 <option value="adult">Adulto</option>
                                 <option value="senior">Sênior</option>
                             </select>
-
-                        <div>
-                            <label for="descricao" class="block text-primary font-medium mb-2">Descricao</label>
-                            <input type="text" id="descricao" name="descricao" class="form-input" placeholder="Descrição do pet">
                         </div>
 
+                        <div>
+                            <label for="descricao" class="block text-primary font-medium mb-2">Descrição</label>
+                            <input type="text" id="descricao" name="descricao" class="form-input" placeholder="Descrição do pet" />
+                        </div>
+
+                        <div>
                             <label class="block text-primary font-medium mb-2">Foto</label>
                             <div class="file-upload">
-                                <input type="file" id="photo" name="photo" class="file-upload-input" accept=".jpg,.jpeg,.png">
+                                <input type="file" id="photo" name="photo" class="file-upload-input" accept=".jpg,.jpeg,.png" />
                                 <label for="photo" class="file-upload-label">
                                     <i class="fas fa-camera mr-2"></i>
                                     Clique para adicionar uma foto
@@ -225,75 +227,63 @@
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center mb-8">
                 <div class="mb-6 md:mb-0">
-                    <img src="{{ url_for('static', filename='logo-navbar.png') }}" alt="Dotapet Logo" class="h-20">
-                    
+                    <img src="{{ url_for('static', filename='logo-navbar.png') }}" alt="Dotapet Logo" class="h-20" />
                 </div>
                 
                 <div class="flex space-x-6 mb-6 md:mb-0">
-                    <img src="{{ url_for('static', filename='unifecaf.png.png') }}" alt="Compra Segura" class="h-10">
-                    
-                
-                    <img src="{{ url_for('static', filename='unifecaf.png.png') }}" alt="Unifecaf" class="h-10">
+                    <img src="{{ url_for('static', filename='unifecaf.png.png') }}" alt="Compra Segura" class="h-10" />
+                    <img src="{{ url_for('static', filename='unifecaf.png.png') }}" alt="Unifecaf" class="h-10" />
                 </div>
                 
-                <div class="grid grid-cols-2 gap-8">
+                <div class="grid grid-cols-2 gap-6 text-sm text-gray-600 md:grid-cols-4 md:gap-12">
                     <div>
-                        <h4 class="font-semibold text-primary mb-3">Links Rápidos</h4>
+                        <p class="font-semibold text-primary mb-4">Rede Social</p>
                         <ul class="space-y-2">
-                            <li><a href="#" class="text-gray-600 hover:text-secondary">Início</a></li>
-                            <li><a href="#" class="text-gray-600 hover:text-secondary">Sobre</a></li>
-                            <li><a href="#" class="text-gray-600 hover:text-secondary">Adotar</a></li>
+                            <li><a href="#" class="hover:text-secondary">Facebook</a></li>
+                            <li><a href="#" class="hover:text-secondary">Instagram</a></li>
+                            <li><a href="#" class="hover:text-secondary">Twitter</a></li>
+                            <li><a href="#" class="hover:text-secondary">LinkedIn</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-semibold text-primary mb-3">Ajuda</h4>
+                        <p class="font-semibold text-primary mb-4">Navegação</p>
                         <ul class="space-y-2">
-                            <li><a href="#" class="text-gray-600 hover:text-secondary">FAQ</a></li>
-                            <li><a href="#" class="text-gray-600 hover:text-secondary">Contato</a></li>
-                            <li><a href="#" class="text-gray-600 hover:text-secondary">Termos</a></li>
+                            <li><a href="pagina-de-busca.html" class="hover:text-secondary">Busca</a></li>
+                            <li><a href="pagina-de-adocao.html" class="hover:text-secondary">Adoção</a></li>
+                            <li><a href="pagina-conheca.html" class="hover:text-secondary">Conheça</a></li>
+                            <li><a href="pagina-de-ajuda.html" class="hover:text-secondary">Ajude</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-primary mb-4">Atendimento</p>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="hover:text-secondary">Contato</a></li>
+                            <li><a href="#" class="hover:text-secondary">Ajuda</a></li>
+                            <li><a href="#" class="hover:text-secondary">Política de Privacidade</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-primary mb-4">Endereço</p>
+                        <ul class="space-y-2 text-gray-700">
+                            <li>Rua João Pereira de Sousa, 71</li>
+                            <li>Barra Funda, São Paulo - SP</li>
+                            <li>CEP: 01142-000</li>
                         </ul>
                     </div>
                 </div>
             </div>
-            
-            <div class="border-t border-gray-200 pt-8 text-center">
-                <p class="text-gray-600">
-                    © 2025 Dotapet. Todos os direitos reservados.
-                </p>
-            </div>
+            <p class="text-center text-gray-500 text-sm">© 2025 Dotapet. Todos os direitos reservados.</p>
         </div>
     </footer>
 
+    <!-- Script para menu mobile -->
     <script>
-        // Mobile menu toggle functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            mobileMenuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-            });
-            
-            // File upload preview (optional)
-            const fileUpload = document.getElementById('photo');
-            if (fileUpload) {
-                fileUpload.addEventListener('change', function(e) {
-                    const fileName = e.target.files[0] ? e.target.files[0].name : 'Nenhum arquivo selecionado';
-                    const label = document.querySelector('.file-upload-label');
-                    label.innerHTML = `<i class="fas fa-check-circle mr-2"></i>${fileName}`;
-                });
-            }
+        const btn = document.getElementById('mobile-menu-button');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
         });
     </script>
 </body>
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul>
-      {% for message in messages %}
-        <li>{{ message }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
-
 </html>

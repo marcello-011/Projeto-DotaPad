@@ -6,11 +6,11 @@ from datetime import datetime
 import os 
 from dotenv import load_dotenv
 from flask_mail import Mail, Message
-import sqlite3
+#import sqlite3
 import threading
 from functools import wraps
-from werkzeug.utils import secure_filename
-import uuid
+#from werkzeug.utils import secure_filename
+#import uuid
 
 
 load_dotenv()
@@ -73,7 +73,9 @@ class Pet(db.Model):
     disponivel = db.Column(db.Boolean, nullable=False, default=True)
     data_cadastro = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     foto_url = db.Column(db.String(255), nullable=True)
-    usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=False)
+    usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=True)
+    idade = db.Column(db.String(10), nullable=False)
+
 
     adocoes = db.relationship('Adocao', backref='pet', lazy=True)
     doacoes_pet = db.relationship('DoacaoPet', backref='pet', lazy=True)
@@ -117,14 +119,6 @@ def load_user(user_id):
     return Usuario.query.get(int(user_id))
 
 
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'usuario_id' not in session:
-            # Redireciona para login e passa a URL original como parâmetro `next`
-            return redirect(url_for('login', next=request.path))
-        return f(*args, **kwargs)
-    return decorated_function
 
 
 def enviar_email_assincrono(app, msg):
@@ -141,20 +135,36 @@ def home():
 #def home():
 #    return render_template('adoacao.html', titulo="DotaPet")
 
-@app.route("/pagina-principal")
+@app.route("/home")
 def pagina_principal():
     return render_template('home.html') 
 
 
 @app.route("/busca")
 def busca():
-    return render_template('busca.html') 
+    return render_template('busca.html')
+
+
+@app.route("/conheca")
+def pagina_conheca():
+    return render_template("conheca.html")
+
+@app.route("/listar_animais")
+def pagina_adocao():
+    return render_template("animais.html")
+
+
+@app.route("/ajude")
+def ajude():
+    return render_template("ajuda.html")
 
 
 
-@app.route("/adotar")
-def adotar():
-    return render_template("adotar.html")
+
+
+#@app.route("/adotar")
+#def adotar():
+#    return render_template("adotar.html")
 
 
 
@@ -192,75 +202,20 @@ def esqueceu_senha():
     return render_template('esqueceu_senha.html')
 
 
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
-
-
-
-
-
 @app.route('/anunciar', methods=['GET', 'POST'])
 def anunciar():
-    # Se o usuário estiver logado, usa o ID dele. Senão, salva como None.
-    usuario_id = current_user.id if current_user.is_authenticated else None
-
+    # Se o método for POST (após um envio de formulário, por exemplo), redireciona para /animais
     if request.method == 'POST':
-        nome = request.form['nome']
-        especie = request.form['especie']
-        sexo = request.form['sexo']
-        tamanho = request.form.get('tamanho')
-        descricao = request.form['descricao']
-        foto_url = request.files.get('foto_url')
-        caminho_arquivo = None
-
-        # Verifique se a pasta 'uploads' existe, se não, crie-a
-        UPLOAD_FOLDER = os.path.join('static', 'uploads')  # Pasta dentro de static
-        if not os.path.exists(UPLOAD_FOLDER):
-            os.makedirs(UPLOAD_FOLDER)
-
-        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-        # Salva a foto se foi enviada
-        if foto_url and foto_url.filename != '':
-            filename = secure_filename(foto_url.filename)
-            unique_filename = f"{uuid.uuid4().hex}_{filename}"  # Apenas uma vez
-            caminho_arquivo = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
-            foto_url.save(caminho_arquivo)
-            foto_url_db = f'uploads/{unique_filename}'
-
-        else:
-            foto_url_db = None
-
-        novo_pet = Pet(
-            nome=nome,
-            especie=especie,
-            sexo=sexo,
-            tamanho=tamanho,
-            descricao=descricao,
-            disponivel=True,
-            foto_url=foto_url_db,
-            usuario_id=usuario_id  # Pode ser None se o usuário não estiver logado
-        )
-
-        db.session.add(novo_pet)
-        db.session.commit()
-        filename = secure_filename(foto_url.filename)
-        pet_id = novo_pet.id  # Aqui você obtém o ID do pet
-        extension = filename.rsplit('.', 1)[-1].lower()  # Para obter a extensão do arquivo (ex: jpg, png)
-        unique_filename = f"{pet_id}_{uuid.uuid4().hex}.{extension}"  # Combine ID e UUID para garantir unicidade
-        caminho_arquivo = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
-
-            # Salve o arquivo
-        foto_url.save(caminho_arquivo)
-        novo_pet.foto_url = f'uploads/{unique_filename}'  # Salve o caminho da imagem no banco
-        db.session.commit()
-
-        flash('Pet anunciado com sucesso!')
-        return redirect(url_for('listar_animais'))
-
+        return redirect('/animais')
+    
+    # Se o método for GET (quando o usuário acessa a página para visualizar o formulário), renderiza a página de anúncio
     return render_template('anunciar.html')
+
+    
+
+
+
+
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -270,7 +225,7 @@ def login():
     if request.method == "POST":
         email = request.form["email"]
         senha = request.form["password"]
-        next_page = request.form.get('next')  # <-- pegar do form POST
+        
 
         usuario = Usuario.query.filter_by(email=email).first()
 
@@ -296,9 +251,7 @@ def login():
         else:
             erro = "E-mail ou senha inválidos. Tente novamente."
 
-    else:
-        # Se for GET, pegar o next da query string para repassar no form
-        next_page = request.args.get('next')
+
 
 
     return render_template("login.html", erro=erro)
@@ -372,8 +325,9 @@ def verifica_login():
 
 @app.route('/animais')
 def listar_animais():
-    animais = Pet.query.filter_by(disponivel=True).all()
-    return render_template('animais.html', animais=animais)
+    pets = Pet.query.all()  # Consulta todos os pets cadastrados
+    return render_template('animais.html', pets=pets)  # Passa os pets para o template
+
 
 
 

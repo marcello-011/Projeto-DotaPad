@@ -64,25 +64,24 @@
             <!-- Logo aumentado -->
             <div class="flex items-center">
                 <a href="pagina-principal.html">
-                    <img src="Assets/logo-navbar.png.png" alt="Dotapet Logo" class="h-16">
+                    <img src="{{ url_for('static', filename='logo-navbar.png') }}" alt="Dotapet Logo" class="h-16">
                 </a>
             </div>
 
             <!-- Menu de navegação -->
             <nav class="hidden md:flex space-x-8">
-                <a href="pagina-de-busca.html" class="text-primary font-medium hover:text-secondary">Busca</a>
-                <a href="pagina-de-adocao.html" class="text-primary font-medium hover:text-secondary">Adoção</a>
-                <a href="pagina-conheca.html" class="text-primary font-medium hover:text-secondary">Conheça</a>
-                <a href="pagina-de-ajuda.html" class="text-primary font-medium hover:text-secondary">Ajude</a>
+                <a href="{{ url_for('busca') }}" class="text-primary font-medium hover:text-secondary">Busca</a>
+                <a href="{{ url_for('listar_animais') }}" class="text-primary font-medium hover:text-secondary">Adoção</a>
+                <a href="{{ url_for('pagina_conheca') }}" class="text-primary font-medium hover:text-secondary">Conheça</a>
+                <a href="{{ url_for('ajude') }}" class="text-primary font-medium hover:text-secondary">Ajude</a>
+
             </nav>
 
                 <!-- Botões como links estilizados -->
                 <div class="hidden md:flex items-center gap-3">
                 <a href="pagina-anunciar.html" class="btn-secondary px-7 py-2 rounded-full font-semibold text-center">
                     Anunciar
-                </a>
-                <a href="pagina-de-login.html" class="btn-secondary px-6 py-2 rounded-full font-semibold text-center">
-                    Entrar
+
                 </a>
                 </div>
 
@@ -100,7 +99,7 @@
         <div class="search-container w-full max-w-2xl p-8 md:p-10">
             <div class="text-center mb-8">
                 <h1 class="text-3xl md:text-4xl font-bold text-primary mb-4">Encontre o novo integrante da sua família</h1>
-                <img src="Assets/Images/cachorro-busca.png" alt="Cachorro para adoção" class="mx-auto h-40 md:h-48 object-contain">
+                <img src="{{ url_for('static', filename='imagens/cachorro-busca.png') }}" alt="Cachorro para adoção" class="mx-auto h-40 md:h-48 object-contain">
             </div>
             
             <!-- Search Form -->
@@ -160,12 +159,12 @@
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center mb-8">
                 <div class="mb-6 md:mb-0">
-                    <img src="Assets/logo-navbar.png.png" alt="Dotapet Logo" class="h-20">
+                    <img src="{{ url_for('static', filename='logo-navbar.png') }}" alt="Dotapet Logo" class="h-20">
                 </div>
                 
                 <div class="flex space-x-6 mb-6 md:mb-0">
-                    <img src="Assets/comprasegura.png.png" alt="Compra Segura" class="h-10">
-                    <img src="Assets/unifecaf.png.png" alt="Unifecaf" class="h-10">
+                    <img src="{{ url_for('static', filename='comprasegura.png.png') }}" alt="Compra Segura" class="h-10">
+                    <img src="{{ url_for('static', filename='unifecaf.png.png') }}" alt="Unifecaf" class="h-10">
                 </div>
                 
                 <div class="grid grid-cols-2 gap-8">

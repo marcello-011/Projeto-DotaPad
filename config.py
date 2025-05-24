@@ -16,6 +16,6 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Pasta para uploads, se estiver usando
-    UPLOAD_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static' 'uploads')
+    UPLOAD_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'uploads')
     
     

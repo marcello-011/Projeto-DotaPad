@@ -32,9 +32,7 @@ class Pets(db.Model):
     data_cadastro = db.Column(db.DateTime, nullable=False)
     foto_url = db.Column(db.String(255), nullable=False)
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=False)
-
-    # Relacionamento opcional com o usuário que cadastrou
-    usuario = db.relationship('Usuario', backref='pets', lazy=True)
+    
 
 class Adocao(db.Model):
     __tablename__ = 'adocoes'

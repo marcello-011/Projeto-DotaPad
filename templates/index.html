@@ -60,10 +60,10 @@
 
             <!-- Menu de navegação -->
             <nav class="hidden md:flex space-x-8">
-                <a href="pagina-de-busca.html" class="text-primary font-medium hover:text-secondary">Busca</a>
-                <a href="pagina-de-adocao.html" class="text-primary font-medium hover:text-secondary">Adoção</a>
-                <a href="pagina-conheca.html" class="text-primary font-medium hover:text-secondary">Conheça</a>
-                <a href="pagina-de-ajuda.html" class="text-primary font-medium hover:text-secondary">Ajude</a>
+                <a href="{{ url_for('busca') }}" class="text-primary font-medium hover:text-secondary">Busca</a>
+                <a href="{{ url_for('listar_animais') }}" class="text-primary font-medium hover:text-secondary">Adoção</a>
+                <a href="{{ url_for('pagina_conheca') }}" class="text-primary font-medium hover:text-secondary">Conheça</a>
+                <a href="{{ url_for('ajude') }}" class="text-primary font-medium hover:text-secondary">Ajude</a>
             </nav>
 
             <!-- Botões como links estilizados -->
